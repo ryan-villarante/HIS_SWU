@@ -5,13 +5,13 @@
 
 **Admin Login Details**
 
-Email   : admin@mail.com
-Password: Password@123
+Email   : nilvel@gmai.com
+Password: 12345
 
 
-**Doctor Login Details**
+**user Login Details**
 
-ID      : YDS7L
-Password: password
+ID      : (use user id number)
+Password: 12345
 
 

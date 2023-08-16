@@ -51,8 +51,8 @@
                                 <div class="widget-rounded-circle card-box">
                                     <div class="row">
                                         <div class="col-6">
-                                            <div class="avatar-lg rounded-circle bg-soft-success border-success border">
-                                                <i class="fas fa-diagnoses  font-22 avatar-title text-success"></i>
+                                            <div class="avatar-lg rounded-circle bg-soft-success border" style="background-color: #800;">
+                                                <i class="fas fa-diagnoses  font-22 avatar-title" style="color: #fff;"></i>
                                             </div>
                                         </div>
                                         <div class="col-6">
@@ -81,8 +81,8 @@
                                 <div class="widget-rounded-circle card-box">
                                     <div class="row">
                                         <div class="col-6">
-                                            <div class="avatar-lg rounded-circle bg-soft-success border-success border">
-                                                <i class="fas fa-wheelchair   font-22 avatar-title text-success"></i>
+                                            <div class="avatar-lg rounded-circle bg-soft-success border" style="background-color: #800;">
+                                                <i class="fas fa-wheelchair   font-22 avatar-title" style="color: #fff;"></i>
                                             </div>
                                         </div>
                                         <div class="col-6">
@@ -110,8 +110,8 @@
                                 <div class="widget-rounded-circle card-box">
                                     <div class="row">
                                         <div class="col-6">
-                                            <div class="avatar-lg rounded-circle bg-soft-success border-success border">
-                                                <i class="mdi mdi-doctor font-22 avatar-title text-success"></i>
+                                            <div class="avatar-lg rounded-circle bg-soft-success border" style="background-color: #800;">
+                                                <i class="mdi mdi-doctor font-22 avatar-title" style="color: #fff;"></i>
                                             </div>
                                         </div>
                                         <div class="col-6">
@@ -143,8 +143,8 @@
                                 <div class="widget-rounded-circle card-box">
                                     <div class="row">
                                         <div class="col-6">
-                                            <div class="avatar-lg rounded-circle bg-soft-success border-success border">
-                                                <i class="fas fa-bed font-22 avatar-title text-success"></i>
+                                            <div class="avatar-lg rounded-circle bg-soft-success border" style="background-color: #800;">
+                                                <i class="fas fa-bed font-22 avatar-title" style="color: #fff;"></i>
                                             </div>
                                         </div>
                                         <div class="col-6">
@@ -174,8 +174,8 @@
                                 <div class="widget-rounded-circle card-box">
                                     <div class="row">
                                         <div class="col-6">
-                                            <div class="avatar-lg rounded-circle bg-soft-success border-success border">
-                                                <i class="mdi mdi-flask font-22 avatar-title text-success"></i>
+                                            <div class="avatar-lg rounded-circle bg-soft-success border" style="background-color: #800;">
+                                                <i class="mdi mdi-flask font-22 avatar-title" style="color: #fff;"></i>
                                             </div>
                                         </div>
                                         <div class="col-6">
@@ -205,8 +205,8 @@
                                 <div class="widget-rounded-circle card-box">
                                     <div class="row">
                                         <div class="col-6">
-                                            <div class="avatar-lg rounded-circle bg-soft-success border-success border">
-                                                <i class="	fas fa-user-friends font-22 avatar-title text-success"></i>
+                                            <div class="avatar-lg rounded-circle bg-soft-success border" style="background-color: #800;">
+                                                <i class="	fas fa-user-friends font-22 avatar-title " style="color: #fff;"></i>
                                             </div>
                                         </div>
                                         <div class="col-6">
@@ -284,7 +284,7 @@
                                                         <?php echo $row->user_cat;?>
                                                     </td>
                                                     <td>
-                                                        <a href="his_admin_view_users.php?user_id=<?php echo $row->user_id;?>&&user_number=<?php echo $row->user_number;?>" class="btn btn-xs btn-success"><i class="mdi mdi-eye"></i> View</a>
+                                                        <a href="his_admin_view_users.php?user_id=<?php echo $row->user_id;?>&&user_number=<?php echo $row->user_number;?>" class="btn btn-xs" style="background-color: #800;"><i class="mdi mdi-eye"></i> View</a>
                                                     </td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
                                                 </tr>
                                             </tbody>

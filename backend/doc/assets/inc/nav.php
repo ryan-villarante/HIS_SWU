@@ -1,19 +1,18 @@
 <?php
-    $user_id = $_SESSION['user_id'];
-    $user_number = $_SESSION['user_number'];
-    $ret="SELECT * FROM  his_user WHERE user_id = ? AND user_number = ?";
-    $stmt= $mysqli->prepare($ret) ;
-    $stmt->bind_param('is',$user_id, $user_number);
-    $stmt->execute() ;//ok
-    $res=$stmt->get_result();
-    //$cnt=1;
-    while($row=$res->fetch_object())
-    {
+$user_id = $_SESSION['user_id'];
+$user_number = $_SESSION['user_number'];
+$ret = "SELECT * FROM  his_user WHERE user_id = ? AND user_number = ?";
+$stmt = $mysqli->prepare($ret);
+$stmt->bind_param('is', $user_id, $user_number);
+$stmt->execute(); //ok
+$res = $stmt->get_result();
+//$cnt=1;
+while ($row = $res->fetch_object()) {
 ?>
-    <div class="navbar-custom">
+    <div class="navbar-custom" style="background-color: #800;">
         <ul class="list-unstyled topnav-menu float-right mb-0">
 
-            <li class="d-none d-sm-block">
+            <!-- <li class="d-none d-sm-block">
                 <form class="app-search">
                     <div class="app-search-box">
                         <div class="input-group">
@@ -26,14 +25,14 @@
                         </div>
                     </div>
                 </form>
-            </li>
+            </li> -->
 
-            
+
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="assets/images/users/<?php echo $row->user_dpic;?>" alt="dpic" class="rounded-circle">
-                    <span class="pro-user-name ml-1">
-                        <?php echo $row->user_fname;?> <?php echo $row->user_lname;?> <i class="mdi mdi-chevron-down"></i> 
+                    <img src="assets/images/users/<?php echo $row->user_dpic; ?>" alt="dpic" class="rounded-circle">
+                    <span class="pro-user-name ml-1 text-light">
+                        <?php echo $row->user_fname; ?> <?php echo $row->user_lname; ?> <i class="mdi mdi-chevron-down"></i>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -54,8 +53,8 @@
                     </a>
 
                     <a href="his_doc_account.php" class="dropdown-item notify-item">
-                    <i class="fas fa-user-tag"></i>
-                    <span> My Profile</span>
+                        <i class="fas fa-user-tag"></i>
+                        <span> My Profile</span>
                     </a>
 
 
@@ -71,7 +70,7 @@
                 </div>
             </li>
 
-           
+
 
         </ul>
 
@@ -79,8 +78,8 @@
         <div class="logo-box">
             <a href="his_doc_dashboard.php" class="logo text-center">
                 <span class="logo-lg">
-                    <img src="assets/images/logo1.png" alt="" height="50">
-                    <!-- <span class="logo-lg-text-light">UBold</span> -->
+                    <img src="assets/images/logos.png" alt="" height="75">
+                    <span class="logo-lg-text-light">HIS</span>
                 </span>
                 <span class="logo-sm">
                     <!-- <span class="logo-sm-text-dark">U</span> -->
@@ -98,11 +97,11 @@
 
             <li class="dropdown d-none d-lg-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    Create New
-                    <i class="mdi mdi-chevron-down"></i> 
+                    <span class="text-light"><strong>CREATE NEW </strong></span>
+                    <i class="mdi mdi-chevron-down"></i>
                 </a>
                 <div class="dropdown-menu">
-                    
+
 
                     <!-- item-->
                     <a href="his_doc_register_patient.php" class="dropdown-item">
@@ -118,13 +117,13 @@
                         <span>Laboratory Report</span>
                     </a>
 
-                    
+
                     <div class="dropdown-divider"></div>
 
-                    
+
                 </div>
             </li>
 
         </ul>
     </div>
-<?php }?>
+<?php } ?>

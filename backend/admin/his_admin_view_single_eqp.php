@@ -1,99 +1,98 @@
 <?php
-  session_start();
-  include('assets/inc/config.php');
-  include('assets/inc/checklogin.php');
-  check_login();
-  $aid=$_SESSION['ad_id'];
+session_start();
+include('assets/inc/config.php');
+include('assets/inc/checklogin.php');
+check_login();
+$aid = $_SESSION['ad_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    
-<?php include ('assets/inc/head.php');?>
 
-    <body>
+<?php include('assets/inc/head.php'); ?>
 
-        <!-- Begin page -->
-        <div id="wrapper">
+<body>
 
-            <!-- Topbar Start -->
-            <?php include('assets/inc/nav.php');?>
-            <!-- end Topbar -->
+    <!-- Begin page -->
+    <div id="wrapper">
 
-            <!-- ========== Left Sidebar Start ========== -->
-                <?php include("assets/inc/sidebar.php");?>
-            <!-- Left Sidebar End -->
+        <!-- Topbar Start -->
+        <?php include('assets/inc/nav.php'); ?>
+        <!-- end Topbar -->
 
-            <!-- ============================================================== -->
-            <!-- Start Page Content here -->
-            <!-- ============================================================== -->
-            <?php
-                $item_code=$_GET['item_code'];
-                $ret="SELECT  * FROM his_equipments WHERE item_code = ?";
-                $stmt= $mysqli->prepare($ret) ;
-                $stmt->bind_param('i',$item_code);
-                $stmt->execute() ;//ok
-                $res=$stmt->get_result();
-                //$cnt=1;
-                while($row=$res->fetch_object())
-                {
-            ?>
+        <!-- ========== Left Sidebar Start ========== -->
+        <?php include("assets/inc/sidebar.php"); ?>
+        <!-- Left Sidebar End -->
 
-                <div class="content-page">
-                    <div class="content">
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+        <?php
+        $item_code = $_GET['item_code'];
+        $ret = "SELECT  * FROM his_equipments WHERE item_code = ?";
+        $stmt = $mysqli->prepare($ret);
+        $stmt->bind_param('i', $item_code);
+        $stmt->execute(); //ok
+        $res = $stmt->get_result();
+        //$cnt=1;
+        while ($row = $res->fetch_object()) {
+        ?>
 
-                        <!-- Start Content-->
-                        <div class="container-fluid">
-                            
-                            <!-- start page title -->
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="page-title-box">
-                                        <div class="page-title-right">
-                                            <ol class="breadcrumb m-0">
-                                                <li class="breadcrumb-item"><a href="his_admin_dashboard.php">Dashboard</a></li>
-                                                <li class="breadcrumb-item"><a href="his_admin_equipments_inventory_copy.php">Inventory</a></li>
-                                                <li class="breadcrumb-item active">Equipments | Assets</li>
-                                            </ol>
-                                        </div>
-                                        
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="his_admin_dashboard.php">Dashboard</a></li>
+                                            <li class="breadcrumb-item"><a href="his_admin_equipments_inventory_copy.php">Inventory</a></li>
+                                            <li class="breadcrumb-item active">Equipments | Assets</li>
+                                        </ol>
                                     </div>
+
                                 </div>
-                            </div>     
-                            <!-- end page title --> 
+                            </div>
+                        </div>
+                        <!-- end page title -->
 
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card-box">
-                                        <div class="row">
-                                            <div class="col-xl-5">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-box">
+                                    <div class="row">
+                                        <div class="col-xl-5">
 
-                                                <div class="tab-content pt-0">
+                                            <div class="tab-content pt-0">
 
-                                                    <div class="tab-pane active show" id="product-1-item">
-                                                        <img src="assets/images/hosp_asset.jpg" alt="" class="img-fluid mx-auto d-block rounded">
-                                                    </div>
-                            
+                                                <div class="tab-pane active show" id="product-1-item">
+                                                    <img src="/assets/images/hosp_asset.jpg" alt="loading" class="img-fluid mx-auto d-block rounded">
                                                 </div>
-                                            </div> <!-- end col -->
-                                            <div class="col-xl-7">
-                                                <div class="pl-xl-3 mt-3 mt-xl-0">
-                                                    <h2 class="mb-3">Description : <?php echo $row->item_code;?></h2>
-                                                    <hr>
-                                                    <h4 class="text-danger">Code: <?php echo $row->item_desc;?></h4>
-                                                    <hr>
-                                                    <h4 class="text-danger">Category: <?php echo $row->item_category;?></h4>
-                                                    <hr>
-                                                    <h4 class="text-danger">Abbreviation : <?php echo $row->item_abb;?></h4>
-                                                    <hr>
-                                                    <h4 class="text-danger">Unit: <?php echo $row->item_unit;?></h4>
-                                                    <hr>
-                                                    <h4 class="text-danger">Big Unit : <?php echo $row->item_big;?></h4>
-                                                    <hr>
-                                                    <h4 class="text-danger">Conversion: <?php echo $row->item_conv;?></h4>
-                                                    <hr>
-                                                    <h4 class="text-danger">Barcode ID: <?php echo $row->item_bar;?></h4>
 
-                                                   <!--
+                                            </div>
+                                        </div> <!-- end col -->
+                                        <div class="col-xl-7">
+                                            <div class="pl-xl-3 mt-3 mt-xl-0">
+                                                <h2 class="mb-3">Description : <?php echo $row->item_code; ?></h2>
+                                                <hr>
+                                                <h4 class="text-danger">Code: <?php echo $row->item_desc; ?></h4>
+                                                <hr>
+                                                <h4 class="text-danger">Category: <?php echo $row->item_category; ?></h4>
+                                                <hr>
+                                                <h4 class="text-danger">Abbreviation : <?php echo $row->item_abb; ?></h4>
+                                                <hr>
+                                                <h4 class="text-danger">Unit: <?php echo $row->item_unit; ?></h4>
+                                                <hr>
+                                                <h4 class="text-danger">Big Unit : <?php echo $row->item_big; ?></h4>
+                                                <hr>
+                                                <h4 class="text-danger">Conversion: <?php echo $row->item_conv; ?></h4>
+                                                <hr>
+                                                <h4 class="text-danger">Barcode ID: <?php echo $row->item_bar; ?></h4>
+
+                                                <!--
                                                     <form class="form-inline mb-4">
                                                         <label class="my-1 mr-2" for="quantityinput">Quantity</label>
                                                         <select class="custom-select my-1 mr-sm-3" id="quantityinput">
@@ -121,12 +120,12 @@
                                                             <span class="btn-label"><i class="mdi mdi-cart"></i></span>Add to cart
                                                         </button>
                                                     </div> -->
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div>
-                                        <!-- end row -->
+                                            </div>
+                                        </div> <!-- end col -->
+                                    </div>
+                                    <!-- end row -->
 
-                                        <!--
+                                    <!--
                                         <div class="table-responsive mt-4">
                                             <table class="table table-bordered table-centered mb-0">
                                                 <thead class="thead-light">
@@ -194,41 +193,41 @@
                                             </table>
                                         </div> -->
 
-                                    </div> <!-- end card-->
-                                </div> <!-- end col-->
-                            </div>
-                            <!-- end row-->
-                            
-                        </div> <!-- container -->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+                        </div>
+                        <!-- end row-->
 
-                    </div> <!-- content -->
+                    </div> <!-- container -->
 
-                    <!-- Footer Start -->
-                        <?php include('assets/inc/footer.php');?>
-                    <!-- end Footer -->
+                </div> <!-- content -->
 
-                </div>
-            <?php }?>
+                <!-- Footer Start -->
+                <?php include('assets/inc/footer.php'); ?>
+                <!-- end Footer -->
 
-            <!-- ============================================================== -->
-            <!-- End Page content -->
-            <!-- ============================================================== -->
+            </div>
+        <?php } ?>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
 
 
-        </div>
-        <!-- END wrapper -->
+    </div>
+    <!-- END wrapper -->
 
-        
 
-        <!-- Right bar overlay-->
-        <div class="rightbar-overlay"></div>
 
-        <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
 
-        <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
-        
-    </body>
+    <!-- Vendor js -->
+    <script src="assets/js/vendor.min.js"></script>
+
+    <!-- App js -->
+    <script src="assets/js/app.min.js"></script>
+
+</body>
 
 </html>

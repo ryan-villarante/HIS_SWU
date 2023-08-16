@@ -40,7 +40,7 @@ CREATE TABLE `his_accounts` (
 --
 
 INSERT INTO `his_accounts` (`acc_id`, `acc_name`, `acc_desc`, `acc_type`, `acc_number`, `acc_amount`) VALUES
-(1, '', ' ', '', '', '');
+(1, 'Test Account Name', '<p>This is a demo test</p>', 'Payable Account', '620157843', '1100');
 
 -- --------------------------------------------------------
 
@@ -67,7 +67,7 @@ CREATE TABLE `his_user` (
 --
 
 INSERT INTO `his_user` (`user_id`, `user_fname`, `user_lname`, `user_email`, `user_pwd`, `user_dept`, `user_number`,`user_cat`, `user_dpic`) VALUES
-(, '', '', '', '', '', '','', '');
+(1, 'Q642V', 'Marvin', 'Obiedo', 'obiedo@gmail.com', '12345', 'User','Infotech', 'jjjg');
 
 -- --------------------------------------------------------
 
@@ -129,7 +129,7 @@ CREATE TABLE `his_docs` (
 --
 
 INSERT INTO `his_docs` (`doc_id`, `doc_fname`, `doc_lname`, `doc_email`, `doc_pwd`, `doc_dept`, `doc_number`,`doc_cat`, `doc_dpic`) VALUES
-(, '', '', '', '', '', '','', '');
+(1,  'Nilo', 'Velarde', 'nilvel1@gmail.com', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -155,7 +155,59 @@ CREATE TABLE `his_equipments` (
 --
 
 INSERT INTO `his_equipments` (`item_id`, `item_code`, `item_desc`, `item_category`, `item_abb`, `item_unit`, `item_big`, `item_conv`,`item_bar`) VALUES
-(, '', ' ', '', '', '', '', '');
+(3, '052367981', 'Surgical Robot', 'Nexus', '<p>Surgical Robots aid in surgey process.</p>', 'Surgical | Theatre', 'Functioning', '100');
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `his_xaminations`
+--
+
+CREATE TABLE `his_examinations` (
+  `exam_id` int(20) NOT NULL,
+  `exam_code` varchar(200) DEFAULT NULL,
+   `exam_category` varchar(200) DEFAULT NULL,
+  `exam_desc` varchar(200) DEFAULT NULL,
+  `exam_abb` varchar(200) DEFAULT NULL,
+  `exam_unit` varchar(200) DEFAULT NULL,
+  `exam_big` varchar(200) DEFAULT NULL
+  `exam_conv` varchar(200) DEFAULT NULL
+  `exam_bar` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--
+-- Dumping data for table `his_examinations`
+--
+
+INSERT INTO `his_examinations` (`exam_id`, `exam_code`, `exam_desc`, `exam_category`, `exam_abb`, `exam_unit`, `exam_big`, `exam_conv`,`exam_bar`) VALUES
+(3, '052367981', 'Surgical Robot', 'Nexus', '<p>Surgical Robots aid in surgey process.</p>', 'Surgical | Theatre', 'Functioning', '100');
+
+-- --------------------------------------------------------
+
+-- Table structure for table `his_procedures
+--
+
+CREATE TABLE `his_procedures` (
+  `pro_id` int(20) NOT NULL,
+  `pro_code` varchar(200) DEFAULT NULL,
+   `pro_category` varchar(200) DEFAULT NULL,
+  `pro_desc` varchar(200) DEFAULT NULL,
+  `pro_abb` varchar(200) DEFAULT NULL,
+  `pro_unit` varchar(200) DEFAULT NULL,
+  `pro_big` varchar(200) DEFAULT NULL
+  `pro_conv` varchar(200) DEFAULT NULL
+  `pro_bar` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--
+-- Dumping data for table `his_procedures`
+--
+
+INSERT INTO `his_procedures` (`pro_id`, `pro_code`, `pro_desc`, `pro_category`, `pro_abb`, `pro_unit`, `pro_big`, `pro_conv`,`pro_bar`) VALUES
+(3, '052367981', 'Surgical Robot', 'Nexus', '<p>Surgical Robots aid in surgey process.</p>', 'Surgical | Theatre', 'Functioning', '100');
 
 -- --------------------------------------------------------
 
@@ -235,7 +287,7 @@ CREATE TABLE `his_emergency` (
 --
 
 INSERT INTO `his_emergency` (`eme_id`, `eme_Pname`, `eme_Pid`, `eme_case`, `eme_DateTime`, `eme_series`, `eme_area`, `eme_bed`, `eme_billed`) VALUES
-(2, '', '', '', '', '', '', '','');
+(3, '052367981', 'Surgical Robot', 'Nexus', '<p>Surgical Robots aid in surgey process.</p>', 'Surgical | Theatre', 'Functioning', '100');
 
 --
 -- Table structure for table `his_laboratory`
@@ -577,6 +629,16 @@ ALTER TABLE `his_docs`
 --
 ALTER TABLE `his_equipments`
   ADD PRIMARY KEY (`item_id`);
+  
+-- Indexes for table `his_examinations`
+--
+ALTER TABLE `his_examinations`
+  ADD PRIMARY KEY (`exam_id`);
+
+  -- Indexes for table `his_procedures`
+--
+ALTER TABLE `his_procedures`
+  ADD PRIMARY KEY (`pro_id`);
 
   -- Indexes for table `his_rooms_beds`
 --
@@ -699,6 +761,18 @@ ALTER TABLE `his_docs`
 --
 ALTER TABLE `his_equipments`
   MODIFY `item_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4; 
+
+
+  -- AUTO_INCREMENT for table `his_examinations`
+--
+ALTER TABLE `his_examinations`
+  MODIFY `exam_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4; 
+--
+
+  -- AUTO_INCREMENT for table `his_procedures`
+--
+ALTER TABLE `his_procedures`
+  MODIFY `pro_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4; 
 --
 
 -- AUTO_INCREMENT for table `his_laboratory`

@@ -68,12 +68,13 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
+                                                    <a href="his_admin_swu_cash_receipt.php" style="text-decoration:none;"><button type="button" class="fa fa-plus lg-4a bi-plus btn btn-success btn-lg-2" data-toggle="modal" style="position:absolute; margin-left: 65%;"> Add Cash Receipt </button></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     
-                                    <div class="table-responsive">
+                                    <div class="table-responsive mt-3">
                                         <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
                                             <thead>
                                             <tr>

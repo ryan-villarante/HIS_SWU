@@ -1,29 +1,194 @@
 <div class="left-side-menu">
 
-                <div class="slimscroll-menu">
+    <div class="slimscroll-menu">
 
-                    <!--- Sidemenu -->
-                    <div id="sidebar-menu">
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
 
-                        <ul class="metismenu" id="side-menu">
+            <ul class="metismenu" id="side-menu">
 
-                            <li class="menu-title">Master Files</li>
+                <li>
+                    <a href="his_doc_dashboard.php">
+                        <i class="fe-airplay"></i>
+                        <span> Dashboard </span>
+                    </a>
 
-                            <li>
-                                <a href="his_doc_dashboard.php">
-                                    <i class="fe-airplay"></i>
-                                    <span> Dashboard </span>
-                                </a>
+                </li>
+
+                <li>
+
+                    <a href="his_doc_view_patients.php">
+                        <i class="fas fa-list "></i>
+                        <span> Master Files </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="his_doc_view_patients.php">
+                                <i class="fab fa-accessible-icon "></i>
+                                <span> Patients </span>
+                            </a>
+
+                        <li>
+                            <a href="his_doc_consultant.php">
+                                <i class=" mdi mdi-doctor "></i>
+                                <span>Consultant</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="his_doc_equipment.php">
+                                <i class=" 	fas fa-capsules "></i>
+                                <span>Items and Services</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="his_doc_room.php ">
+                                <i class="fas fa-bed"></i>
+                                <span> Rooms and Beds </span>
+
+                            </a>
+
+                        </li>
+                        <li>
+                            <a href="his_doc_guarantor.php">
+                                <i class="	fas fa-user-friends"></i>
+                                <span> HMOs Guarantors </span>
+                            </a>
+                        </li>
+
+                </li>
+
+                </a>
+                </li>
+                </li>
+
+            </ul>
+            <li>
+                <a href="his_doc_view_patients.php">
+                    <i class="	fas fa-pencil-alt"></i>
+                    <span>Transactions</span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li>
+                        <a href="his_doc_emergency.php">
+                            <i class="	fas fa-briefcase-medical"></i>
+                            <span> Emergencies </span>
+
+                        </a>
+
+                    <li>
+                        <a href="his_doc_inpatient.php">
+                            <i class="fas fa-procedures"></i>
+                            <span> Inpatients </span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <!--<a href="his_admin_swu_outpatient.php">
+                                        <i class="fas fa-lock"></i>
+                                        <span> OutPatient </span>
+
+                                    </a>-->
+                        <a href="his_doc_outpatient.php">
+                            <i class="	fas fa-diagnoses"></i>
+                            <span> OutPatient </span>
+
+                        </a>
+                    </li>
+                    <!--<li>
+                                    <a href="his_admin_swu_nurse.php">
+                                    <i class="	fas fa-user-nurse"></i>
+                                        <span> Nursing Services </span>
+
+                                    </a>
                                 
-                            </li>
+                                </li>
+                                <li>
+                                    <a href="his_admin_swu_diet.php">
+                                    <i class="	fas fa-prescription-bottle"></i>
+                                        <span> Dietary Services </span>
+                                    </a>
+                                
+                                </li>-->
+                    <li>
+                        <a href="his_doc_ancillary.php">
+                            <i class="	fas fa-pills"></i>
+                            <span> Ancillary Services </span>
+                        </a>
 
-                            <li>
-                                <a href="his_doc_view_patients.php">
-                                    <i class="fab fa-accessible-icon "></i>
-                                    <span> Patients </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <!--<ul class="nav-second-level" aria-expanded="false">
+                    </li>
+                    <li>
+                        <a href="his_doc_exam.php">
+                            <i class="	fas fa-file-medical-alt"></i>
+                            <span> Examination Upshot </span>
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <a href="his_doc_cash.php">
+                            <i class="	fas fa-donate"></i>
+                            <span> Cash Receipt </span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="his_doc_refund.php">
+                            <i class="	fas fa-hand-holding-usd"></i>
+                            <span> Patient Refunds </span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="his_doc_billing.php">
+                            <i class="	fas fa-file-invoice-dollar"></i>
+                            <span> Billing Schedules </span>
+
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="his_centralized.php">
+                            <i class="	fas fa-user-md"></i>
+                            <span> Centralized Patient Account Management </span>
+                        </a>
+
+                    </li>
+                    </a>
+            </li>
+
+            </ul>
+
+            <li>
+            <li>
+                <a href="his_doc_manage_user.php">
+                    <i class="	fas fa-user-alt"></i>
+                    <span> My Account </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+
+                    <li>
+                        <a href="his_doc_update-account.php">
+                            <i class="fas fa-eye"></i><span>Update Account</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="his_doc_account.php">
+                            <i class="	fas fa-pencil-alt"></i><span>View Account</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+
+
+            <!--<ul class="nav-second-level" aria-expanded="false">
                                     <li>
                                         <a href="his_doc_register_patient.php">Register Patient</a>
                                     </li>
@@ -41,40 +206,9 @@
                                         <a href="his_doc_patient_transfer.php">Patient Transfers</a>
                                     </li>
                                 </ul> -->
-                            </li>
 
-                            <li>
-                            <a href="his_doc_consultant.php">
-                                    <i class="mdi mdi-doctor"></i>
-                                    <span> Consultant </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                            </li>
-                            <li>
-                            <a href="his_doc_equipment.php">
-                                    <i class="fas fa-funnel-dollar "></i>
-                                    <span> Items and Services </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                            </li>
-                            <li>
-                            <a href="his_doc_room.php">
-                                    <i class="fe-airplay"></i>
-                                    <span> Rooms and Beds </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                            </li>
-                            <li>
-                            <a href="his_doc_guarantor.php">
-                                    <i class="fe-airplay"></i>
-                                    <span> HMO Guarantors </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                            </li>
 
-                          
-
-                           <!-- <li> 
+            <!-- <li> 
                                 <a href="javascript: void(0);">
                                     <i class="mdi mdi-pill"></i>
                                     <span> Pharmacy </span>
@@ -158,7 +292,7 @@
                                 </ul>
                             </li> -->
 
-                            <!--<li>
+            <!--<li>
                                 <a href="javascript: void(0);">
                                     <i class="mdi mdi-cash-refund "></i>
                                     <span> Payrolls </span>
@@ -172,16 +306,16 @@
                                 </ul>
                             </li>-->
 
-                            
 
-                       </ul>
 
-                    </div>
-                    <!-- End Sidebar -->
+            </ul>
 
-                    <div class="clearfix"></div>
+        </div>
+        <!-- End Sidebar -->
 
-                </div>
-                <!-- Sidebar -left -->
+        <div class="clearfix"></div>
 
-            </div>
+    </div>
+    <!-- Sidebar -left -->
+
+</div>
