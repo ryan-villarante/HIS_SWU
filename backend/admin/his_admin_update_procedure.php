@@ -10,12 +10,13 @@ if (isset($_POST['update_procedures'])) {
     $pro_big = $_POST['pro_big'];
     $pro_conv = $_POST['pro_conv'];
     $pro_bar = $_POST['pro_bar'];
+    $pro_price = $_POST['pro_price'];
 
 
     //sql to update captured values
-    $query = "UPDATE  his_procedures SET  pro_desc=?,pro_category=?,pro_abb=?,pro_unit=?,pro_big=?,pro_conv=?,pro_bar=? WHERE pro_code = ?";
+    $query = "UPDATE  his_procedures SET  pro_desc=?,pro_category=?,pro_abb=?,pro_unit=?,pro_big=?,pro_conv=?,pro_bar=?,pro_price=? WHERE pro_code = ?";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('ssssssss',  $pro_desc, $pro_category, $pro_abb, $pro_unit, $pro_big, $pro_conv, $pro_bar, $pro_code);
+    $rc = $stmt->bind_param('sssssssss',  $pro_desc, $pro_category, $pro_abb, $pro_unit, $pro_big, $pro_conv, $pro_bar, $pro_price, $pro_code);
     $stmt->execute();
     /*
 			*Use Sweet Alerts Instead Of This Fucked Up Javascript Alerts
@@ -70,7 +71,7 @@ if (isset($_POST['update_procedures'])) {
                                         <li class="breadcrumb-item active">Update Procedures</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Update Procedure Details</h4>
+                                <!-- <h4 class="page-title">Update Procedure Details</h4> -->
                             </div>
                         </div>
                     </div>
@@ -90,50 +91,71 @@ if (isset($_POST['update_procedures'])) {
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title">Fill all fields</h4>
+                                        <div class="form-group col-md-12 my-2">
+                                            <input type="text" readonly name="" value="Update Procedure Details" class="form-control" style="background-color: #800;color:white;text-align: center;">
+                                        </div>
                                         <!--Add Patient Form-->
                                         <form method="post" enctype="multipart/form-data">
                                             <div class="form-row">
-                                                <div class="form-group col-md-6">
+                                                <div class="form-group col-md-6" style="display: none;">
                                                     <label for="inputEmail4" class="col-form-label">Code</label>
                                                     <input type="text" required="required" value="<?php echo $row->pro_code; ?>" name="pro_code" class="form-control" id="inputEmail4">
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="inputPassword4" class="col-form-label">Item Category</label>
-                                                    <input required="required" type="text" value="<?php echo $row->pro_category; ?>" name="pro_category" class="form-control" id="inputPassword4">
+                                                    <label for="inputState" class="col-form-label">Category</label>
+                                                    <select id="inputState" required="required" name="pro_category" class="form-control">
+                                                        <option <?= $row->pro_category == 'RHB Procedures' ? ' selected="selected"' : ''; ?>>RHB Procedures</option>
+                                                        <option <?= $row->pro_category == 'OR Procedures' ? ' selected="selected"' : ''; ?>>OR Procedures</option>
+                                                        <option <?= $row->pro_category == 'RHU Procedures' ? ' selected="selected"' : ''; ?>>RHU Procedures</option>
+                                                        <option <?= $row->pro_category == 'Procedures' ? ' selected="selected"' : ''; ?>>Procedures</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="proDesc" class="col-form-label">Item Description</label>
+                                                    <input type="text" required="required" value="<?php echo $row->pro_desc; ?>" name="pro_desc" class="form-control" id="proDesc" oninput="updateProAbbreviation()">
                                                 </div>
                                             </div>
 
                                             <div class="form-row">
+
                                                 <div class="form-group col-md-6">
-                                                    <label for="inputEmail4" class="col-form-label">Item Description</label>
-                                                    <input type="text" required="required" value="<?php echo $row->pro_desc; ?>" name="pro_desc" class="form-control" id="inputEmail4">
+                                                    <label for="proAbb" class="col-form-label">Abbreviation</label>
+                                                    <input required="required" readonly type="text" value="<?php echo $row->pro_abb; ?>" name="pro_abb" class="form-control" id="proAbb">
                                                 </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="inputPassword4" class="col-form-label">Abbreviation</label>
-                                                    <input required="required" type="text" value="<?php echo $row->pro_abb; ?>" name="pro_abb" class="form-control" id="inputPassword4">
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
+                                                <div class="form-group col-md-6" style="display: none;">
                                                     <label for="inputEmail4" class="col-form-label">Unit</label>
-                                                    <input type="text" required="required" value="<?php echo $row->pro_unit; ?>" name="pro_unit" class="form-control" id="inputEmail4">
+                                                    <select id="inputState" name="pro_unit" value="<?php echo $row->pro_unit; ?>" class="form-control">
+                                                        <option>None</option>
+
+                                                    </select>
                                                 </div>
                                                 <div class="form-group col-md-6">
+                                                    <label for="inputPassword4" class="col-form-label">Price</label>
+                                                    <input type="number" required="required" value="<?php echo $row->pro_price; ?>" name="pro_price" class="form-control" id="inputPassword4">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+
+                                                <div class="form-group col-md-6" style="display: none;">
                                                     <label for="inputEmail4" class="col-form-label">Big Unit</label>
-                                                    <input type="text" required="required" value="<?php echo $row->pro_big; ?>" name="pro_big" class="form-control" id="inputEmail4">
+                                                    <select id="inputState" name="pro_big" value="<?php echo $row->pro_big; ?>" class="form-control">
+                                                        <option>None</option>
+
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-6" style="display: none;">
+                                                    <label for="inputEmail4" class="col-form-label">Conversion</label>
+                                                    <input type="number" value="<?php echo $row->pro_conv; ?>" name="pro_conv" class="form-control" id="inputEmail4">
                                                 </div>
                                             </div>
 
                                             <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="inputEmail4" class="col-form-label">Conversion</label>
-                                                    <input type="text" required="required" value="<?php echo $row->pro_conv; ?>" name="pro_conv" class="form-control" id="inputEmail4">
-                                                </div>
-                                                <div class="form-group col-md-6">
+
+                                                <div class="form-group col-md-6" style="display: none;">
                                                     <label for="inputPassword4" class="col-form-label">Barcode ID</label>
                                                     <input required="required" type="text" value="<?php echo $row->pro_bar; ?>" name="pro_bar" class="form-control" id="inputPassword4">
                                                 </div>
+
                                             </div>
 
                                             <!-- <div class="form-row">
@@ -142,8 +164,9 @@ if (isset($_POST['update_procedures'])) {
                                                     <input required="required"  type="file" name="doc_dpic" class="btn btn-success form-control"  id="inputCity">
                                                 </div>
                                            </div> -->
+                                            <a href="his_admin_equipments_inventory_copy.php" button type="button" class="ladda-button btn maroon-outline-btn my-3"> Cancel</a>
+                                            <button type="submit" name="update_procedures" class="ladda-button btn maroon-outline-btn my-3" data-style="expand-right">Update Procedures</button>
 
-                                            <button type="submit" name="update_procedures" class="ladda-button btn btn-success" data-style="expand-right">Update Procedures</button>
 
                                         </form>
                                         <!--End Patient Form-->
@@ -188,6 +211,16 @@ if (isset($_POST['update_procedures'])) {
 
     <!-- Buttons init js-->
     <script src="assets/js/pages/loading-btn.init.js"></script>
+
+    <script>
+        function updateProAbbreviation() {
+            // Get the value from the "Item Description" input
+            var itemDescriptionValue = document.getElementById("proDesc").value;
+
+            // Set the value of the "Abbreviation" input to the value of the "Item Description" input
+            document.getElementById("proAbb").value = itemDescriptionValue;
+        }
+    </script>
 
 </body>
 

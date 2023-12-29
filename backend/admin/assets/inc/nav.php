@@ -78,13 +78,14 @@ while ($row = $res->fetch_object()) {
                 <button class="button-menu-mobile waves-effect waves-light">
                     <i class="fe-menu"></i>
                 </button>
+                <span class="logo-lg-text-light" style="color: white;font-size:large;font-weight:bold">ADMIN</span>
             </li>
 
             <li class="dropdown d-none d-lg-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light " data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                <!-- <a class="nav-link dropdown-toggle waves-effect waves-light " data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <span class="text-light"><strong>CREATE NEW </strong></span>
                     <i class="mdi mdi-chevron-down"></i>
-                </a>
+                </a> -->
                 <div class="text-light dropdown-menu">
 
                     <!-- item-->

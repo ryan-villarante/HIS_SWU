@@ -1,17 +1,17 @@
 
 
-**Recommended PHP Version 5.6, 7.4**
 
 
-**Admin Login Details**
+**SuperAdmin Login Details**
 
-Email   : nilvel@gmail.com
+Email   : supadmin@gmail.com
 Password: 12345
 
+**Amin Login :
+- you can create new admin in superadmin page
 
 **User Login Details**
-
-you can create default users
+- you can create default users in supadmin and admin page
 
 
 

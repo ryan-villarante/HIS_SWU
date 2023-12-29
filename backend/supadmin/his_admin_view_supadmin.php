@@ -3,7 +3,7 @@ session_start();
 include 'assets/inc/config.php';
 include 'assets/inc/checklogin.php';
 check_login();
-$aid = $_SESSION['ad_id'];
+$aid = $_SESSION['sup_id'];
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +45,7 @@ $aid = $_SESSION['ad_id'];
 
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Super Admin Details</h4>
+                                <!-- <h4 class="page-title">Super Admin Details</h4> -->
                             </div>
                         </div>
                     </div>

@@ -29,216 +29,181 @@ $aid = $_SESSION['ad_id'];
         <!-- ============================================================== -->
 
         <!--Get Details Of A Single User And Display Them Here-->
-        <?php
-        $pat_number = $_GET['pat_number'];
-        $pat_id = $_GET['pat_id'];
-        $ret = "SELECT  * FROM his_patients WHERE pat_id=?";
-        $stmt = $mysqli->prepare($ret);
-        $stmt->bind_param('i', $pat_id);
-        $stmt->execute(); //ok
-        $res = $stmt->get_result();
-        //$cnt=1;
-        while ($row = $res->fetch_object()) {
-            $mysqlDateTime = $row->pat_date_joined;
-        ?>
-            <div class="content-page">
-                <div class="content">
 
-                    <!-- Start Content-->
-                    <div class="container-fluid">
+        <div class="content-page">
+            <div class="content">
 
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Patients</a></li>
-                                            <li class="breadcrumb-item active">View Patients</li>
-                                        </ol>
-                                    </div>
-                                    <h4 class="page-title"><?php echo $row->pat_fname; ?> <?php echo $row->pat_lname; ?>'s Profile</h4>
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="his_admin_dashboard.php">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="his_admin_view_patients.php">Patients</a></li>
+                                        <li class="breadcrumb-item active">View Patients</li>
+                                    </ol>
                                 </div>
+
                             </div>
                         </div>
-                        <!-- end page title -->
-
-                        <div class="row">
-                            <div class="col-lg-4 col-xl-4">
-                                <div class="card-box text-center">
-                                    <img src="assets/images/users/patient.png" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
-
-
-                                    <div class="text-left mt-3">
-
-                                        <p class="text-muted mb-2 font-13"><strong>Full Name :</strong> <span class="ml-2"><?php echo $row->pat_fname; ?> <?php echo $row->pat_lname; ?></span></p>
-                                        <p class="text-muted mb-2 font-13"><strong>Mobile :</strong><span class="ml-2"><?php echo $row->pat_phone; ?></span></p>
-                                        <p class="text-muted mb-2 font-13"><strong>Address :</strong> <span class="ml-2"><?php echo $row->pat_addr; ?></span></p>
-                                        <p class="text-muted mb-2 font-13"><strong>Date Of Birth :</strong> <span class="ml-2"><?php echo $row->pat_dob; ?></span></p>
-                                        <p class="text-muted mb-2 font-13"><strong>Age :</strong> <span class="ml-2"><?php echo $row->pat_age; ?> Years</span></p>
-                                        <p class="text-muted mb-2 font-13"><strong>Ailment :</strong> <span class="ml-2"><?php echo $row->pat_ailment; ?></span></p>
-                                        <hr>
-                                        <p class="text-muted mb-2 font-13"><strong>Date Recorded :</strong> <span class="ml-2"><?php echo date("d/m/Y - h:m", strtotime($mysqlDateTime)); ?></span></p>
-                                        <hr>
-
-
-
-
-                                    </div>
-
-                                </div> <!-- end card-box -->
-
-                            </div> <!-- end col-->
-
-                        <?php } ?>
-                        <div class="col-lg-8 col-xl-8">
-                            <div class="card-box">
-                                <ul class="nav nav-pills navtab-bg nav-justified">
-                                    <li class="nav-item">
-                                        <a href="#aboutme" data-toggle="tab" aria-expanded="false" class="nav-link active">
-                                            Prescription
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#timeline" data-toggle="tab" aria-expanded="true" class="nav-link ">
-                                            Vitals
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link">
-                                            Lab Records
-                                        </a>
-                                    </li>
-                                </ul>
-                                <!--Medical History-->
-                                <div class="tab-content">
-                                    <div class="tab-pane show active" id="aboutme">
-                                        <ul class="list-unstyled timeline-sm">
-                                            <?php
-                                            $pres_pat_number = $_GET['pat_number'];
-                                            $ret = "SELECT  * FROM his_prescriptions WHERE pres_pat_number ='$pres_pat_number'";
-                                            $stmt = $mysqli->prepare($ret);
-                                            // $stmt->bind_param('i',$pres_pat_number );
-                                            $stmt->execute(); //ok
-                                            $res = $stmt->get_result();
-                                            //$cnt=1;
-
-                                            while ($row = $res->fetch_object()) {
-                                                $mysqlDateTime = $row->pres_date; //trim timestamp to date
-
-                                            ?>
-                                                <li class="timeline-sm-item">
-                                                    <span class="timeline-sm-date"><?php echo date("Y-m-d", strtotime($mysqlDateTime)); ?></span>
-                                                    <h5 class="mt-0 mb-1"><?php echo $row->pres_pat_ailment; ?></h5>
-                                                    <p class="text-muted mt-2">
-                                                        <?php echo $row->pres_ins; ?>
-                                                    </p>
-
-                                                </li>
-                                            <?php } ?>
-                                        </ul>
-
-                                    </div> <!-- end tab-pane -->
-                                    <!-- end Prescription section content -->
-
-                                    <div class="tab-pane show " id="timeline">
-                                        <div class="table-responsive">
-                                            <table class="table table-borderless mb-0">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th>Body Temperature</th>
-                                                        <th>Heart Rate/Pulse</th>
-                                                        <th>Respiratory Rate</th>
-                                                        <th>Blood Pressure</th>
-                                                        <th>Date Recorded</th>
-                                                    </tr>
-                                                </thead>
-                                                <?php
-                                                $vit_pat_number = $_GET['pat_number'];
-                                                $ret = "SELECT  * FROM his_vitals WHERE vit_pat_number ='$vit_pat_number'";
-                                                $stmt = $mysqli->prepare($ret);
-                                                // $stmt->bind_param('i',$vit_pat_number );
-                                                $stmt->execute(); //ok
-                                                $res = $stmt->get_result();
-                                                //$cnt=1;
-
-                                                while ($row = $res->fetch_object()) {
-                                                    $mysqlDateTime = $row->vit_daterec; //trim timestamp to date
-
-                                                ?>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td><?php echo $row->vit_bodytemp; ?>°C</td>
-                                                            <td><?php echo $row->vit_heartpulse; ?>BPM</td>
-                                                            <td><?php echo $row->vit_resprate; ?>bpm</td>
-                                                            <td><?php echo $row->vit_bloodpress; ?>mmHg</td>
-                                                            <td><?php echo date("Y-m-d", strtotime($mysqlDateTime)); ?></td>
-                                                        </tr>
-                                                    </tbody>
-                                                <?php } ?>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!-- end vitals content-->
-
-                                    <div class="tab-pane" id="settings">
-                                        <ul class="list-unstyled timeline-sm">
-                                            <?php
-                                            $lab_pat_number = $_GET['pat_number'];
-                                            $ret = "SELECT  * FROM his_laboratory WHERE lab_pat_number  = '$lab_pat_number'";
-                                            $stmt = $mysqli->prepare($ret);
-                                            // $stmt->bind_param('i',$lab_pat_number);
-                                            $stmt->execute(); //ok
-                                            $res = $stmt->get_result();
-                                            //$cnt=1;
-
-                                            while ($row = $res->fetch_object()) {
-                                                $mysqlDateTime = $row->lab_date_rec; //trim timestamp to date
-
-                                            ?>
-                                                <li class="timeline-sm-item">
-                                                    <span class="timeline-sm-date"><?php echo date("Y-m-d", strtotime($mysqlDateTime)); ?></span>
-                                                    <h3 class="mt-0 mb-1"><?php echo $row->lab_pat_ailment; ?></h3>
-                                                    <hr>
-                                                    <h5>
-                                                        Laboratory Tests
-                                                    </h5>
-
-                                                    <p class="text-muted mt-2">
-                                                        <?php echo $row->lab_pat_tests; ?>
-                                                    </p>
-                                                    <hr>
-                                                    <h5>
-                                                        Laboratory Results
-                                                    </h5>
-
-                                                    <p class="text-muted mt-2">
-                                                        <?php echo $row->lab_pat_results; ?>
-                                                    </p>
-                                                    <hr>
-
-                                                </li>
-                                            <?php } ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- end lab records content-->
-
-                            </div> <!-- end tab-content -->
-                        </div> <!-- end card-box-->
-
-                        </div> <!-- end col -->
                     </div>
-                    <!-- end row-->
+                    <!-- end page title -->
 
-                </div> <!-- container -->
 
-            </div> <!-- content -->
 
-            <!-- Footer Start -->
-            <?php include('assets/inc/footer.php'); ?>
-            <!-- end Footer -->
+
+                    <div class="col-lg-8 col-xl-12">
+                        <div class="card-box">
+                            <ul class="nav nav-pills navtab-bg nav-justified">
+                                <li class="nav-item">
+                                    <div class="form-group col-md-12 my-1">
+                                        <input type="text" readonly name="" value="Patient Details" class="form-control" style="background-color: #800;color:white;text-align: center;">
+                                    </div>
+                                </li>
+                                <!-- <li class="nav-item">
+                                    <a href="#timeline" data-toggle="tab" aria-expanded="true" class="nav-link ">
+                                        Consultant and Rooms
+                                    </a>
+                                </li> -->
+                                <!-- <li class="nav-item">
+                                    <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                        Lab Records
+                                    </a>
+                                </li> -->
+                            </ul>
+                            <!--Medical History-->
+
+
+                            <!-- <img src="assets/images/users/patient.png" class="rounded-circle avatar-xl img-thumbnail" alt="profile-image"> -->
+
+
+                            <div class="text-left mt-3">
+                                <?php
+                                $pat_number = $_GET['pat_number'];
+                                $pat_id = $_GET['pat_id'];
+                                $ret = "SELECT  * FROM his_patients WHERE pat_id=?";
+                                $stmt = $mysqli->prepare($ret);
+                                $stmt->bind_param('i', $pat_id);
+                                $stmt->execute(); //ok
+                                $res = $stmt->get_result();
+                                //$cnt=1;
+                                while ($row = $res->fetch_object()) {
+                                    $mysqlDateTime = $row->pat_date_joined;
+                                ?>
+
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe hehe">Patient ID</span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe  " id="inputlg" value="<?php echo $pat_number ?>">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe">Full Name</span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe " id `="" value="<?php echo $row->pat_fname; ?> <?php echo $row->pat_lname; ?>">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe">Mobile Number</span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe " id `="inputlg" value="<?php echo $row->pat_phone; ?>">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe">Address</span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe " id `="inputlg" value="<?php echo $row->pat_addr; ?>">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe">Date Of Birth </span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe " id `="inputlg" value="<?php echo $row->pat_dob; ?>">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe">Age </span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe " id `="inputlg" value="<?php echo $row->pat_age; ?> Years Old">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe">Gender </span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe " id `="inputlg" value="<?php echo $row->pat_gender; ?> ">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe">Civil Status </span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe " id `="inputlg" value="<?php echo $row->pat_status; ?> ">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe">Patient Type </span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe " id `="inputlg" value="<?php echo $row->pat_type; ?>">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe">Date Recorded </span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe " id `="inputlg" value="<?php echo date("d/m/Y - h:m", strtotime($mysqlDateTime)); ?>">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe">Attending Physician </span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe " id `="inputlg" value="<?php echo $row->pat_doc; ?>">
+                                            </div>
+
+
+
+
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <!-- New column for the image -->
+                                            <img style="border: 3px solid; border-color:#800" src="../admin/assets/images/1.avif" alt="Image Description" class="img-fluid">
+                                        </div>
+
+
+                                        </ul>
+
+                                    </div>
+                                <?php } ?> <!-- end tab-pane -->
+                                <!-- end Prescription section content -->
+
+
+
+                                <div class="tab-pane" id="settings">
+
+                                </div>
+                            </div>
+                            <!-- end lab records content-->
+
+                        </div> <!-- end tab-content -->
+                    </div> <!-- end card-box-->
+
+                </div> <!-- end col -->
+            </div>
+            <!-- end row-->
+
+        </div> <!-- container -->
+
+    </div> <!-- content -->
+
+    <!-- Footer Start -->
+    <?php include('assets/inc/footer.php'); ?>
+    <!-- end Footer -->
 
     </div>
 

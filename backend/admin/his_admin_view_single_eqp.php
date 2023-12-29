@@ -69,7 +69,7 @@ $aid = $_SESSION['ad_id'];
                                             <div class="tab-content pt-0">
 
                                                 <div class="tab-pane active show" id="product-1-item">
-                                                    <img src="/assets/images/hosp_asset.jpg" alt="loading" class="img-fluid mx-auto d-block rounded">
+                                                    <img src="../admin/assets/images/hosp_asset.jpg" alt="loading" class="img-fluid mx-auto ">
                                                 </div>
 
                                             </div>
@@ -78,19 +78,21 @@ $aid = $_SESSION['ad_id'];
                                             <div class="pl-xl-3 mt-3 mt-xl-0">
                                                 <h2 class="mb-3">Description : <?php echo $row->item_code; ?></h2>
                                                 <hr>
-                                                <h4 class="text-danger">Code: <?php echo $row->item_desc; ?></h4>
+                                                <h4 class="text-secondary">Code: <?php echo $row->item_desc; ?></h4>
                                                 <hr>
-                                                <h4 class="text-danger">Category: <?php echo $row->item_category; ?></h4>
+                                                <h4 class="text-secondary">Category: <?php echo $row->item_category; ?></h4>
                                                 <hr>
-                                                <h4 class="text-danger">Abbreviation : <?php echo $row->item_abb; ?></h4>
+                                                <h4 class="text-secondary">Abbreviation : <?php echo $row->item_abb; ?></h4>
                                                 <hr>
-                                                <h4 class="text-danger">Unit: <?php echo $row->item_unit; ?></h4>
+                                                <h4 class="text-secondary">Unit: <?php echo $row->item_unit; ?></h4>
                                                 <hr>
-                                                <h4 class="text-danger">Big Unit : <?php echo $row->item_big; ?></h4>
+                                                <h4 class="text-secondary">Big Unit : <?php echo $row->item_big; ?></h4>
                                                 <hr>
-                                                <h4 class="text-danger">Conversion: <?php echo $row->item_conv; ?></h4>
+                                                <h4 class="text-secondary">Conversion: <?php echo $row->item_conv; ?></h4>
                                                 <hr>
-                                                <h4 class="text-danger">Barcode ID: <?php echo $row->item_bar; ?></h4>
+                                                <h4 class="text-secondary">Barcode ID: <?php echo $row->item_bar; ?></h4>
+                                                <hr>
+                                                <h4 class="text-secondary">Price: ₱ <?php echo $row->item_price; ?>.00</h4>
 
                                                 <!--
                                                     <form class="form-inline mb-4">

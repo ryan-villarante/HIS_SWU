@@ -5,25 +5,121 @@ include 'backend/admin/assets/inc/config.php';
 if (isset($_POST['user_login'])) {
     $user_number = $_POST['user_number'];
     $user_pwd = sha1(md5($_POST['user_pwd'])); //double encrypt to increase security
-    $stmt = $mysqli->prepare("SELECT user_number, user_pwd, user_id FROM his_user WHERE  user_number=? AND user_pwd=? "); //sql to log in user
+    $stmt = $mysqli->prepare("SELECT user_number, user_pwd, user_id FROM his_user WHERE  user_number=? AND user_pwd=? AND user_dept='Pharmacist'"); //sql to log in user
     $stmt->bind_param('ss', $user_number, $user_pwd); //bind fetched parameters
     $stmt->execute(); //execute bind
     $stmt->bind_result($user_number, $user_pwd, $user_id); //bind result
     $rs = $stmt->fetch();
     $_SESSION['user_id'] = $user_id;
     $_SESSION['user_number'] = $user_number; //Assign session to user_number id
+    // $_SESSION['user_dept'] = $user_dept;
     //$uip=$_SERVER['REMOTE_ADDR'];
     //$ldate=date('d/m/Y h:i:s', time());
     if ($rs) { //if its sucessfull
-        header("location:backend/doc/his_doc_dashboard.php");
+        header("location:backend/pharma/his_pharma_dashboard.php");
     } else {
         #echo "<script>alert('Access Denied Please Check Your Credentials');</script>";
         $err = "Access Denied Please Check Your Credentials";
     }
 }
 if (isset($_POST['user_login'])) {
+    $user_number = $_POST['user_number'];
+    $user_pwd = sha1(md5($_POST['user_pwd'])); //double encrypt to increase security
+    $stmt = $mysqli->prepare("SELECT user_number, user_pwd, user_id FROM his_user WHERE  user_number=? AND user_pwd=? AND user_dept='Nurse'"); //sql to log in user
+    $stmt->bind_param('ss', $user_number, $user_pwd); //bind fetched parameters
+    $stmt->execute(); //execute bind
+    $stmt->bind_result($user_number, $user_pwd, $user_id); //bind result
+    $rs = $stmt->fetch();
+    $_SESSION['user_id'] = $user_id;
+    $_SESSION['user_number'] = $user_number; //Assign session to user_number id
+    // $_SESSION['user_dept'] = $user_dept;
+    //$uip=$_SERVER['REMOTE_ADDR'];
+    //$ldate=date('d/m/Y h:i:s', time());
+    if ($rs) { //if its sucessfull
+        header("location:backend/nurse/his_nurse_dashboard.php");
+    } else {
+        #echo "<script>alert('Access Denied Please Check Your Credentials');</script>";
+        $err = "Access Denied Please Check Your Credentials";
+    }
+}
+
+
+if (isset($_POST['user_login'])) {
+    $user_number = $_POST['user_number'];
+    $user_pwd = sha1(md5($_POST['user_pwd'])); //double encrypt to increase security
+    $stmt = $mysqli->prepare("SELECT user_number, user_pwd, user_id FROM his_user WHERE  user_number=? AND user_pwd=? AND user_dept='Cashier'"); //sql to log in user
+    $stmt->bind_param('ss', $user_number, $user_pwd); //bind fetched parameters
+    $stmt->execute(); //execute bind
+    $stmt->bind_result($user_number, $user_pwd, $user_id); //bind result
+    $rs = $stmt->fetch();
+    $_SESSION['user_id'] = $user_id;
+    $_SESSION['user_number'] = $user_number; //Assign session to user_number id
+    // $_SESSION['user_dept'] = $user_dept;
+    //$uip=$_SERVER['REMOTE_ADDR'];
+    //$ldate=date('d/m/Y h:i:s', time());
+    if ($rs) { //if its sucessfull
+
+        // Set session variables
+        $_SESSION['user_id'] = $user_id;
+        $_SESSION['user_number'] = $user_number;
+
+
+        header("location:backend/billing/his_billing_dashboard.php");
+    } else {
+        #echo "<script>alert('Access Denied Please Check Your Credentials');</script>";
+        $err = "Access Denied Please Check Your Credentials";
+    }
+}
+
+
+
+if (isset($_POST['user_login'])) {
+    $user_number = $_POST['user_number'];
+    $user_pwd = sha1(md5($_POST['user_pwd'])); //double encrypt to increase security
+    $stmt = $mysqli->prepare("SELECT user_number, user_pwd, user_id FROM his_user WHERE  user_number=? AND user_pwd=? AND user_dept='Medtech'"); //sql to log in user
+    $stmt->bind_param('ss', $user_number, $user_pwd); //bind fetched parameters
+    $stmt->execute(); //execute bind
+    $stmt->bind_result($user_number, $user_pwd, $user_id); //bind result
+    $rs = $stmt->fetch();
+    $_SESSION['user_id'] = $user_id;
+    $_SESSION['user_number'] = $user_number;
+    // $_SESSION['user_dept'] = $user_dept;
+
+    //$uip=$_SERVER['REMOTE_ADDR'];
+    //$ldate=date('d/m/Y h:i:s', time());
+    if ($rs) { //if its sucessfull
+        header("location:backend/medtech/his_medtech_dashboard.php");
+    } else {
+        #echo "<script>alert('Access Denied Please Check Your Credentials');</script>";
+        $err = "Access Denied Please Check Your Credentials";
+    }
+}
+
+if (isset($_POST['user_login'])) {
+    $user_number = $_POST['user_number'];
+    $user_pwd = sha1(md5($_POST['user_pwd'])); //double encrypt to increase security
+    $stmt = $mysqli->prepare("SELECT user_number, user_pwd, user_id FROM his_user WHERE  user_number=? AND user_pwd=? AND user_dept='Receptionist'"); //sql to log in user
+    $stmt->bind_param('ss', $user_number, $user_pwd); //bind fetched parameters
+    $stmt->execute(); //execute bind
+    $stmt->bind_result($user_number, $user_pwd, $user_id); //bind result
+    $rs = $stmt->fetch();
+    $_SESSION['user_id'] = $user_id;
+    $_SESSION['user_number'] = $user_number; //Assign session to user_number id
+    // $_SESSION['user_dept'] = $user_dept;
+    //$uip=$_SERVER['REMOTE_ADDR'];
+    //$ldate=date('d/m/Y h:i:s', time());
+    if ($rs) { //if its sucessfull
+        header("location:backend/infostaff/his_doc_dashboard.php");
+    } else {
+        #echo "<script>alert('Access Denied Please Check Your Credentials');</script>";
+        $err = "Access Denied Please Check Your Credentials";
+    }
+}
+
+
+
+if (isset($_POST['user_login'])) {
     $ad_email = $_POST['user_number'];
-    //$doc_email = $_POST['doc_ea']
     $ad_pwd = sha1(md5($_POST['user_pwd']));
     $stmt = $mysqli->prepare("SELECT ad_email ,ad_pwd , ad_id FROM his_admin WHERE ad_email=? AND ad_pwd=? ");
     $stmt->bind_param('ss', $ad_email, $ad_pwd); //bind fetched parameters
@@ -31,25 +127,25 @@ if (isset($_POST['user_login'])) {
     $stmt->bind_result($ad_email, $ad_pwd, $ad_id); //bind result
     $rs = $stmt->fetch();
     $_SESSION['ad_id'] = $ad_id; //Assign session to admin id
-    //$uip=$_SERVER['REMOTE_ADDR'];
-    //$ldate=date('d/m/Y h:i:s', time());
+    $_SESSION['ad_email'] = $ad_email;
     if ($rs) { //if its sucessfull
+        $_SESSION['ad_id'] = $ad_id;
+        $_SESSION['ad_email'] = $ad_email;
+
         header("location:backend/admin/his_admin_dashboard.php");
     } else {
-        #echo "<script>alert('Access Denied Please Check Your Credentials');</script>";
         $err = "Access Denied Please Check Your Credentials";
     }
 }
 if (isset($_POST['user_login'])) {
-    $ad_email = $_POST['user_number'];
-    //$doc_email = $_POST['doc_ea']
-    $ad_pwd = sha1(md5($_POST['user_pwd']));
+    $sup_email = $_POST['user_number'];
+    $sup_pwd = $_POST['user_pwd'];
     $stmt = $mysqli->prepare("SELECT sup_email ,sup_pwd , sup_id FROM his_supadmin WHERE sup_email=? AND sup_pwd=? ");
-    $stmt->bind_param('ss', $ad_email, $ad_pwd); //bind fetched parameters
+    $stmt->bind_param('ss', $sup_email, $sup_pwd); //bind fetched parameters
     $stmt->execute(); //execute bind
-    $stmt->bind_result($ad_email, $ad_pwd, $ad_id); //bind result
+    $stmt->bind_result($sup_email, $sup_pwd, $sup_id); //bind result
     $rs = $stmt->fetch();
-    $_SESSION['ad_id'] = $ad_id; //Assign session to admin id
+    $_SESSION['sup_id'] = $sup_id; //Assign session to admin id
     //$uip=$_SERVER['REMOTE_ADDR'];
     //$ldate=date('d/m/Y h:i:s', time());
     if ($rs) { //if its sucessfull
@@ -65,6 +161,7 @@ if (isset($_POST['user_login'])) {
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,18 +173,18 @@ if (isset($_POST['user_login'])) {
     <meta content="" name="MartDevelopers" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="backend/doc/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="backend/infostaff/assets/images/favicon.ico">
 
     <!-- App css -->
-    <link href="backend/doc/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="backend/doc/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="backend/doc/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link href="backend/infostaff/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="backend/infostaff/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="backend/infostaff/assets/css/app.min.css" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="script/feedback.js"></script>
     <!--Load Sweet Alert Javascript-->
 
-    <script src="backend/doc/assets/js/swal.js"></script>
+    <script src="backend/infostaff/assets/js/swal.js"></script>
     <!--Inject SWAL-->
     <?php if (isset($success)) { ?>
         <!--This code for injecting an alert-->
@@ -129,7 +226,7 @@ if (isset($_POST['user_login'])) {
 
                             <div class="text-center w-75 m-auto">
                                 <a href="index.php">
-                                    <span><img src="backend/doc/assets/images/logo.png" alt="" height="80"></span>
+                                    <span><img src="backend/infostaff/assets/images/logo.png" alt="" height="80"></span>
                                 </a>
                                 <p class=" mb-3 mt-2">HOSPITAL INFORMATION SYSTEM</p>
                                 <p class="text-muted mb-4 mt-3">Enter your Credentials to access Admin or User panel</p>
@@ -149,6 +246,7 @@ if (isset($_POST['user_login'])) {
 
                                 <div class="form-group mb-0 text-center">
                                     <button class="btn btn-primary btn-block" name="user_login" type="submit"> Log In </button>
+                                    <!-- style="background-color: #800;border-color:black;" -->
                                 </div>
 
                             </form>
@@ -199,10 +297,10 @@ if (isset($_POST['user_login'])) {
 
 
     <!-- Vendor js -->
-    <script src="backend/doc/assets/js/vendor.min.js"></script>
+    <script src="backend/infostaff/assets/js/vendor.min.js"></script>
 
     <!-- App js -->
-    <script src="backend/doc/assets/js/app.min.js"></script>
+    <script src="backend/infostaff/assets/js/app.min.js"></script>
 
 </body>
 

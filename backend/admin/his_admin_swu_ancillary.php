@@ -1,10 +1,36 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 include('assets/inc/config.php');
 include('assets/inc/checklogin.php');
 check_login();
 $aid = $_SESSION['ad_id'];
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteRecordId'])) {
+    $id = intval($_POST['deleteRecordId']);
+    // echo "ID to delete: " . $id . "<br>"; // Debug: Check if the ID is correct
+    $adn = "UPDATE  his_ancillary SET deleted = 1 WHERE render_id=?";
+    $stmt = $mysqli->prepare($adn);
+    if (!$stmt) {
+        die("Error in preparing the delete statement: " . $mysqli->error);
+    }
+    $stmt->bind_param('i', $id);
+    if (!$stmt->execute()) {
+        die("Error executing the delete statement: " . $stmt->error);
+    }
+    $stmt->close();
+
+    if ($stmt) {
+        $success = "Record successfully deleted";
+        // You can optionally redirect here or update the UI as needed
+        // echo "Deletion successful<br>"; // Debug: Check if deletion was successful
+    } else {
+        $err = "Try Again Later";
+    }
+}
 
 ?>
 
@@ -14,6 +40,8 @@ $aid = $_SESSION['ad_id'];
 <?php include('assets/inc/head.php'); ?>
 
 <body>
+
+    <?php include('his_admin_patient_type.php'); ?>
 
     <!-- Begin page -->
     <div id="wrapper">
@@ -58,26 +86,30 @@ $aid = $_SESSION['ad_id'];
                             <div class="card-box">
 
 
-                                <div class="col-md-12 d-flex justify-content-end">
+                                <div class="col-md-12 d-flex justify-content-start">
                                     <!-- Trigger the modal with a button -->
-                                    <button type="button" class="fa fa-plus lg-4 bi-plus btn btn-outline-success btn-lg-2" data-toggle="modal" data-target="#myModal"> Direct Render</button>
+                                    <button type="button" class="fa fa-plus lg-4 bi-plus btn btn-lg-2 maroon-outline-btn" data-toggle="modal" data-target="#myModal"> Direct Render</button>
+
 
                                     <!-- Modal -->
                                     <div class="modal fade" id="myModal" role="dialog">
-                                        <div class="modal-dialog modal-lg">
+                                        <div class="modal-dialog modal-xl">
 
                                             <!-- Modal content-->
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     Patient Register Selection
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="card-body">
-                                                        <!--Add Patient Form-->
+
 
                                                         <?php
 
-                                                        $ret = "SELECT * FROM  his_patients,his_rooms_beds,his_docs  LIMIT 1 ";
+                                                        $ret = "SELECT * FROM  his_patients  LIMIT 1  ";
                                                         $stmt = $mysqli->prepare($ret);
                                                         $stmt->execute(); //ok
                                                         $res = $stmt->get_result();
@@ -88,50 +120,48 @@ $aid = $_SESSION['ad_id'];
 
                                                             <form method="post">
                                                                 <div class="form-row">
-                                                                    <div class="form-group col-md-4">
+                                                                    <div class="form-group col-md-8 my-2">
                                                                         <label for="inputAddress" class="col-form-label">Patient Type</label>
-                                                                        <select id="inputState" required="required" name="" class="form-control">
-                                                                            <option>All Registry Case Type</option>
+
+                                                                        <select id="patientType" required="required" name="" class="form-control">
+                                                                            <option>OutPatient</option>
                                                                             <option>InPatient</option>
                                                                             <option>Emergency</option>
-                                                                            <option>OutPatient</option>
+                                                                            <option>All Registry Case Type</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="form-group col-md-4">
+                                                                    <!-- <div class="form-group col-md-4">
                                                                         <label for="inputAddress" class="col-form-label">Admission Date</label>
-                                                                        <select id="inputState" required="required" name="" class="form-control">
-                                                                            <option><span class="ml-2"><?php echo date("d/m/Y - h:m", strtotime($mysqlDateTime)); ?></span></option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="form-group col-md-4">
+                                                                        <input type="text" readonly name="ad_date" class="form-control" value="<?php echo date("d/m/Y - h:m", strtotime($mysqlDateTime)); ?>">
+                                                                    </div> -->
+                                                                    <div class="form-group col-md-4 my-2">
                                                                         <label for="inputAddress" class="col-form-label">Case Status</label>
-                                                                        <select id="inputState" required="required" name="" class="form-control">
+                                                                        <input type="text" readonly name="case_status" class="form-control input-sm" id="inputlg" value="Active">
+                                                                        <!-- <select id="inputState" required="required" name="" class="form-control">
                                                                             <option>Active</option>
                                                                             <option>Discharged</option>
                                                                             <option>For MGH Clearance</option>
                                                                             <option>Cleared for MGH</option>
                                                                             <option>May-Go-Home</option>
                                                                             <option>Untagged MGH</option>
-                                                                        </select>
+                                                                        </select> -->
                                                                     </div>
-                                                                    <div class="form-group col-md-4">
+                                                                    <!-- <div class="form-group col-md-4">
                                                                         <label for="inputAddress" class="col-form-label">OPD.ERD Case Date</label>
-                                                                        <select id="inputState" required="required" name="" class="form-control">
-                                                                            <option><span class="ml-2"><?php echo date("d/m/Y - h:m", strtotime($mysqlDateTime)); ?></span></option>
-                                                                        </select>
+                                                                        <input type="text" readonly name="opd_date" class="form-control" value="<?php echo date("d/m/Y - h:m", strtotime($mysqlDateTime)); ?>">
+
                                                                     </div>
                                                                     <div class="form-group col-md-4">
                                                                         <label for="inputAddress" class="col-form-label">Discharged Date</label>
-                                                                        <select id="inputState" required="required" name="" class="form-control">
-                                                                            <option><span class="ml-2"><?php echo date("d/m/Y - h:m", strtotime($mysqlDateTime)); ?></span></option>
-                                                                        </select>
+                                                                        <input type="text" readonly name="dis_date" class="form-control" value="<?php echo date("d/m/Y - h:m", strtotime($mysqlDateTime)); ?>">
                                                                     </div>
                                                                     <div class="form-group col-md-4">
                                                                         <label for="inputAddress" class="col-form-label">Nurse Station</label>
+                                                                        <input type="text" readonly name="nurse_station" class="form-control input-sm" id="inputlg" value="None">
                                                                         <select id="inputState" required="required" name="" class="form-control">
                                                                             <option>None</option>
                                                                         </select>
-                                                                    </div>
+                                                                    </div> -->
 
                                                                 </div>
                                                             <?php $cnt = $cnt + 1;
@@ -140,10 +170,55 @@ $aid = $_SESSION['ad_id'];
 
                                                             </form>
 
+                                                            <script>
+                                                                $("#patientType").change(function() {
+                                                                    const type = $(this).val();
+                                                                    var currentRequest = null;
+                                                                    if (currentRequest) {
+                                                                        currentRequest.abort();
+                                                                    }
+
+                                                                    // Send a new AJAX request
+                                                                    currentRequest = $.ajax({
+                                                                        url: 'http://localhost/HIS-SWU/backend/admin/his_admin_patient_type.php',
+                                                                        method: 'GET',
+                                                                        data: {
+                                                                            patientType: type,
+                                                                        },
+                                                                        dataType: 'json',
+                                                                        success: function(data) {
+
+                                                                            // Populate the table with search results
+                                                                            $("#patientTypeTable tbody").empty()
+                                                                            $.each(data, function(index, item) {
+                                                                                $("#patientTypeTable tbody").append(
+                                                                                    `
+                                                                                    <tr>
+                                                                                        <td>${index + 1}</td>
+                                                                                        <td>${item.pat_case}</td>
+                                                                                        <td><span class="ml-2">${item.pat_date_joined}</span></td>
+                                                                                        <td>${item.pat_number}</td>
+                                                                                        <td>${item.pat_fname} ${item.pat_lname}</td>
+                                                                                        <td>
+                                                                                            <a href="his_admin_render.php?pat_id=${item.pat_id}&pat_number=${item.pat_number}" class="badge badge-success"><i class="mdi mdi-eye"></i> Select</a>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    `
+                                                                                )
+                                                                            })
+                                                                        },
+                                                                        error: function(e) {
+                                                                            console.log("error: ", e)
+                                                                        }
+                                                                    })
+
+                                                                })
+                                                            </script>
+
 
 
                                                             <div class="table-responsive">
-                                                                <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                                                <table id="patientTypeTable" class="table table-bordered toggle-circle mb-0" data-page-size="7">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>#</th>
@@ -151,52 +226,45 @@ $aid = $_SESSION['ad_id'];
                                                                             <th data-toggle="true">Reference Date</th>
                                                                             <th data-toggle="true">Patient ID</th>
                                                                             <th data-toggle="true">Full Name</th>
-                                                                            <th data-hide="phone">Room No/ Bed No.</th>
                                                                             <th data-hide="phone">Action</th>
 
 
                                                                         </tr>
                                                                     </thead>
                                                                     <?php
-
-                                                                    $ret = "SELECT * FROM  his_patients,his_rooms_beds,his_docs  LIMIT 1 ";
+                                                                    $ret = "SELECT DISTINCT p.pat_id, p.pat_case, p.pat_number, p.pat_fname, p.pat_lname, p.pat_date_joined, rb.room_number
+                                                                        FROM his_patients p
+                                                                        LEFT JOIN his_rooms_beds rb ON p.room_id = rb.room_id
+                                                                        WHERE p.pat_type = 'outpatient'  ";
                                                                     $stmt = $mysqli->prepare($ret);
-                                                                    $stmt->execute(); //ok
+                                                                    $stmt->execute();
                                                                     $res = $stmt->get_result();
                                                                     $cnt = 1;
-                                                                    while ($row = $res->fetch_object()) {
-                                                                        $mysqlDateTime = $row->pat_date_joined;
+
                                                                     ?>
 
 
-                                                                        <tbody>
+                                                                    <tbody>
+                                                                        <?php while ($row = $res->fetch_object()) {
+                                                                            $mysqlDateTime = $row->pat_date_joined; ?>
                                                                             <tr>
                                                                                 <td><?php echo $cnt; ?></td>
-                                                                                <td>12345</td>
+                                                                                <td><?php echo $row->pat_case; ?></td>
                                                                                 <td><span class="ml-2"><?php echo date("d/m/Y - h:m", strtotime($mysqlDateTime)); ?></span></td>
                                                                                 <td><?php echo $row->pat_number; ?></td>
                                                                                 <td><?php echo $row->pat_fname; ?> <?php echo $row->pat_lname; ?></td>
-                                                                                <td><?php echo $row->room_number; ?></td>
                                                                                 <td>
-                                                                                    <a href="his_admin_render.php?pat_id=<?php echo $row->pat_id; ?>&&pat_number=<?php echo $row->pat_number; ?>" class="badge badge-success"><i class="mdi mdi-eye"></i> Select</a>
+                                                                                    <a href="his_admin_render.php?pat_id=<?php echo $row->pat_id; ?>&pat_number=<?php echo $row->pat_number; ?>" class="badge badge-success"><i class="mdi mdi-eye"></i> Select</a>
                                                                                 </td>
-
-
                                                                             </tr>
-                                                                        </tbody>
+                                                                        <?php } ?>
+                                                                    </tbody>
                                                                     <?php $cnt = $cnt + 1;
-                                                                    } ?>
+                                                                    ?>
 
                                                                 </table>
                                                             </div> <!-- end .table-responsive-->
 
-                                                            <div class="modal-footer">
-
-                                                                <!-- <button type="submit" name="add_doc" class="ladda-button btn btn-primary" data-style="expand-right">Select</button> -->
-                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-
-
-                                                            </div>
 
 
 
@@ -211,69 +279,115 @@ $aid = $_SESSION['ad_id'];
                                     </div>
 
                                 </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $(".maroon-outline-btn").click(function() {
+                                            $(this).toggleClass("active");
+                                        });
+                                    });
+                                </script>
+                                <form method="post" action="his_admin_swu_ancillary.php">
 
 
-
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="card-box">
-
-                                            <!-- div class="mb-2">
-                                                <div class="row">
-                                                    <div class="col-12 text-sm-center form-inline">
-                                                        <div class="form-group mr-2" style="display:none">
-                                                            <select id="demo-foo-filter-status" class="custom-select custom-select-sm">
-                                                                <option value="">Show all</option>
-                                                                <option value="Discharged">Discharged</option>
-                                                                <option value="OutPatients">OutPatients</option>
-                                                                <option value="InPatients">InPatients</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
-                                                        </div> -->
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete this record?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="table-responsive">
-                                    <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th data-toggle="true">Patient Name</th>
-                                                <th data-toggle="true">Age</th>
-                                                <th data-toggle="true">Room No./Bed No.</th>
-                                                <th data-toggle="true">Requisition No.</th>
-                                                <th data-hide="phone">Requisition DateTime</th>
-                                                <th data-hide="phone">Requesting Doctor</th>
-                                                <th data-hide="phone">Requesting Department</th>
-                                                <th data-hide="phone">Document No.</th>
-                                                <th data-hide="phone">DateTime To Perform</th>
-                                                <th data-hide="phone">Render DateTime</th>
-                                                <th data-hide="phone">Amount</th>
-                                                <th data-hide="phone">Registry No.</th>
-                                                <th data-hide="phone">OR No.</th>
-                                                <th data-hide="phone">Payment Amount</th>
-                                                <th data-hide="phone">Payer Name</th>
-                                                <th data-hide="phone">Requested By</th>
-                                                <th data-hide="phone">Rendered By</th>
-                                                <th data-hide="phone">Cancelled By</th>
 
-                                            </tr>
-                                        </thead>
 
-                                        <!-- <tfoot>
-                                            <tr class="active">
-                                                <td colspan="8">
-                                                    <div class="text-right">
-                                                        <ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tfoot> -->
-                                    </table>
-                                </div> <!-- end .table-responsive-->
+
+
+
+                                    <div class="table-responsive my-3 ">
+                                        <table id="demo-foo-filtering" class="table table-borderless table-hover mb-0 table-sm " data-page-size="7">
+                                            <thead class="table-danger">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th data-toggle="true">Patient Name</th>
+                                                    <th data-toggle="true">Age</th>
+                                                    <!-- <th data-toggle="true">Room No./Bed No.</th> -->
+                                                    <!-- <th data-toggle="true">Requisition No.</th> -->
+                                                    <!-- <th data-hide="phone">Requisition DateTime</th> -->
+                                                    <th data-hide="phone">Requesting Doctor</th>
+                                                    <!-- <th data-hide="phone">Requesting Department</th> -->
+                                                    <th data-hide="phone">Document No.</th>
+                                                    <!-- <th data-hide="phone">DateTime To Perform</th> -->
+                                                    <th data-hide="phone">Render DateTime</th>
+                                                    <th data-hide="phone">Amount</th>
+                                                    <!-- <th data-hide="phone">Registry No.</th>
+                                                <th data-hide="phone">OR No.</th> -->
+                                                    <!-- <th data-hide="phone">Payment Amount</th> -->
+                                                    <th data-hide="phone">Payer Name</th>
+                                                    <!-- <th data-hide="phone">Requested By</th> -->
+                                                    <th data-hide="phone">Rendered By</th>
+                                                    <!-- <th data-hide="phone">Cancelled By</th> -->
+                                                    <!-- <th>Action</th> -->
+
+                                                </tr>
+                                            </thead>
+                                            <?php
+                                            $ret = "SELECT * FROM  his_ancillary ";
+                                            //sql code to get to ten docs  randomly
+                                            $stmt = $mysqli->prepare($ret);
+                                            $stmt->execute(); //ok
+                                            $res = $stmt->get_result();
+                                            $cnt = 1;
+                                            while ($row = $res->fetch_object()) {
+                                            ?>
+                                                <tbody>
+                                                    <td><?php echo $cnt; ?></td>
+                                                    <td><?php echo $row->render_name; ?></td>
+                                                    <td class="text-center"><?php echo $row->render_age; ?></td>
+                                                    <!-- <td><?php echo $row->render_room_number; ?></td> -->
+                                                    <td><?php echo $row->render_req_doc; ?></td>
+                                                    <td><?php echo $row->render_doc_number; ?></td>
+                                                    <td><?php echo $row->render_req_date; ?></td>
+                                                    <td class="text-center"><?php echo $row->render_payment; ?></td>
+                                                    <!-- <td class="text-center">0.00</td> -->
+                                                    <td><?php echo $row->render_payer_name; ?></td>
+                                                    <td><?php echo $row->render_by; ?></td>
+                                                    <!-- <td>
+                                                        <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#deleteConfirmationModal" data-recordid="<?php echo $row->render_id; ?>">
+                                                            <i class="mdi mdi-trash-can-outline"></i> Delete
+                                                        </a>
+                                                    </td> -->
+
+                                                </tbody>
+
+                                            <?php $cnt = $cnt + 1;
+                                            } ?>
+
+                                            <tfoot>
+                                                <tr class="active">
+                                                    <td colspan="16">
+                                                        <div class="text-right">
+                                                            <ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div> <!-- end .table-responsive-->
+
+                                    <input type="hidden" name="deleteRecordId" id="deleteRecordId" value="">
+                                </form>
                             </div> <!-- end card-box -->
                         </div> <!-- end col -->
                     </div>
@@ -312,6 +426,17 @@ $aid = $_SESSION['ad_id'];
 
     <!-- App js -->
     <script src="assets/js/app.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.badge-danger').click(function() {
+                var recordId = $(this).data('recordid');
+                console.log("Record ID:", recordId); // Check if the correct ID is printed
+                $('#deleteRecordId').val(recordId);
+            });
+        });
+    </script>
+
 
 </body>
 

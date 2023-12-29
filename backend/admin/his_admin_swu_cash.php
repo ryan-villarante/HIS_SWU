@@ -1,183 +1,385 @@
 <?php
-  session_start();
-  include('assets/inc/config.php');
-  include('assets/inc/checklogin.php');
-  check_login();
-  $aid=$_SESSION['ad_id'];
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+session_start();
+include('assets/inc/config.php');
+include('assets/inc/checklogin.php');
+check_login();
+$aid = $_SESSION['ad_id'];
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteRecordId'])) {
+    $id = intval($_POST['deleteRecordId']);
+    // echo "ID to delete: " . $id . "<br>"; // Debug: Check if the ID is correct
+    $adn = "DELETE FROM his_cash WHERE cash_id=?";
+    $stmt = $mysqli->prepare($adn);
+    if (!$stmt) {
+        die("Error in preparing the delete statement: " . $mysqli->error);
+    }
+    $stmt->bind_param('i', $id);
+    if (!$stmt->execute()) {
+        die("Error executing the delete statement: " . $stmt->error);
+    }
+    $stmt->close();
+
+    if ($stmt) {
+        $success = "Record successfully deleted";
+        // You can optionally redirect here or update the UI as needed
+        // echo "Deletion successful<br>"; // Debug: Check if deletion was successful
+    } else {
+        $err = "Try Again Later";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-    
-<?php include('assets/inc/head.php');?>
 
-    <body>
+<?php include('assets/inc/head.php'); ?>
+<?php include('his_admin_search.php'); ?>
 
-        <!-- Begin page -->
-        <div id="wrapper">
+<body>
 
-            <!-- Topbar Start -->
-                <?php include('assets/inc/nav.php');?>
-            <!-- end Topbar -->
+    <!-- Begin page -->
+    <div id="wrapper">
 
-            <!-- ========== Left Sidebar Start ========== -->
-                <?php include("assets/inc/sidebar.php");?>
-            <!-- Left Sidebar End -->
+        <!-- Topbar Start -->
+        <?php include('assets/inc/nav.php'); ?>
+        <!-- end Topbar -->
 
-            <!-- ============================================================== -->
-            <!-- Start Page Content here -->
-            <!-- ============================================================== -->
+        <!-- ========== Left Sidebar Start ========== -->
+        <?php include("assets/inc/sidebar.php"); ?>
+        <!-- Left Sidebar End -->
 
-            <div class="content-page">
-                <div class="content">
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
 
-                    <!-- Start Content-->
-                    <div class="container-fluid">
-                        
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Cash Receipt</a></li>
-                                            <li class="breadcrumb-item active">Cash Receipt</li>
-                                        </ol>
-                                    </div>
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Cash Receipt</a></li>
+                                        <li class="breadcrumb-item active">Cash Receipt</li>
+                                    </ol>
                                 </div>
                             </div>
-                        </div>     
-                        <!-- end page title --> 
+                        </div>
+                    </div>
+                    <!-- end page title -->
 
 
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card-box">
-                                         Cash Receipt
-                                    <div class="mb-2">
-                                        <div class="row">
-                                            <div class="col-12 text-sm-center form-inline" >
-                                                <div class="form-group mr-2" style="display:none">
-                                                    <select id="demo-foo-filter-status" class="custom-select custom-select-sm">
-                                                        <option value="">Show all</option>
-                                                        <option value="Discharged">Discharged</option>
-                                                        <option value="OutPatients">OutPatients</option>
-                                                        <option value="InPatients">InPatients</option>
-                                                    </select>
+
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card-box">
+
+
+                                <div class="col-md-12 d-flex justify-content-start">
+                                    <!-- Trigger the modal with a button -->
+                                    <button type="button" class="fa fa-plus lg-4 bi-plus btn btn-lg-2 maroon-outline-btn" data-toggle="modal" data-target="#myModal"> Add Cash Receipt</button>
+
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModal" role="dialog">
+                                        <div class="modal-dialog modal-xl">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    Patient Register Selection
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
-                                                <div class="form-group">
-                                                    <input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
-                                                    <a href="his_admin_swu_cash_receipt.php" style="text-decoration:none;"><button type="button" class="fa fa-plus lg-4a bi-plus btn btn-success btn-lg-2" data-toggle="modal" style="position:absolute; margin-left: 65%;"> Add Cash Receipt </button></a>
+                                                <div class="modal-body">
+                                                    <div class="card-body">
+
+
+
+
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-8 my-2">
+                                                                <label for="inputAddress" class="col-form-label">Patient Data</label>
+
+                                                            </div>
+
+                                                        </div>
+
+
+
+                                                        <div class="row">
+                                                            <div class="col-12 text-sm-center form-inline searchContainer">
+                                                                <div class="form-group">
+                                                                    <input type="text" id="searchInput" placeholder="Search" data-tablename="his_ancillary" data-columntosearch="render_name" data-resulttable="ancillaryData" class="form-control form-control-sm demo-foo-search" autocomplete="on" onkeyup="searchTable()">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+
+
+
+
+                                                        <div class="table-responsive">
+                                                            <table id="ancillaryData" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                                                <thead class="table-danger">
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th data-toggle="true">Patient Name</th>
+                                                                        <th data-toggle="true">Age</th>
+                                                                        <th data-toggle="true">Room No.</th>
+                                                                        <th data-toggle="true">Requesting Doctor</th>
+                                                                        <th data-toggle="true">Payment Amount</th>
+                                                                        <th data-hide="phone">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <?php
+                                                                    $ret = "SELECT * FROM his_ancillary WHERE paid = 0 ";
+                                                                    $stmt = $mysqli->prepare($ret);
+                                                                    $stmt->execute();
+                                                                    $res = $stmt->get_result();
+                                                                    $cnt = 1;
+                                                                    while ($row = $res->fetch_object()) {
+                                                                    ?>
+
+
+                                                                        <td><?php echo $cnt; ?></td>
+                                                                        <td><?php echo $row->render_name ?></td>
+                                                                        <td><?php echo $row->render_age ?></td>
+                                                                        <td><?php echo $row->render_room_number ?></td>
+                                                                        <td><?php echo $row->render_req_doc ?></td>
+                                                                        <td><?php echo $row->render_payment ?></td>
+                                                                        <td>
+                                                                            <a href="his_admin_swu_render_cash.php?render_id=<?php echo $row->render_id; ?>" class="badge badge-success"><i class="mdi mdi-eye"></i> Select</a>
+                                                                        </td>
+
+
+                                                                </tbody>
+
+                                                            <?php
+                                                                        $cnt = $cnt + 1;
+                                                                    }
+                                                            ?>
+                                                            <tfoot>
+                                                                <tr class="active">
+                                                                    <td colspan="7">
+                                                                        <div class="text-right">
+                                                                            <ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                            </table>
+                                                        </div> <!-- end .table-responsive-->
+
+
+
+
+
+
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $(".maroon-outline-btn").click(function() {
+                                            $(this).toggleClass("active");
+                                        });
+                                    });
+                                </script>
+
+
+                                <form method="post" action="his_admin_swu_cash.php">
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete this record?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
+                                    <!-- END MODAL -->
+
+
                                     <div class="table-responsive mt-3">
-                                        <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th data-toggle="true">Official Receipt Number</th>
-                                                <th data-toggle="true">Official Receipt Date</th>
-                                                <th data-hide="phone">Payer Name</th>
-                                                <th data-hide="phone">Cash Amount</th>
-                                                <th data-hide="phone">Check Amount</th>
-                                                <th data-hide="phone">Credit Card Amount</th>
-                                                <th data-hide="phone">Other Amount</th>
-                                                <th data-hide="phone">Applied Amount</th>
-                                                <th data-hide="phone">Unapplied Amount</th>
-                                                <th data-hide="phone">Refund Amount</th>
-                                                <th data-hide="phone">Cashier Name</th>
-                                                <th data-hide="phone">Remarks</th>
-                                            </tr>
+                                        <table id="demo-foo-filtering" class="table table-borderless table-hover mb-0 table-sm" data-page-size="7">
+                                            <thead class="table-danger">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th data-toggle="true">Official Receipt Number</th>
+                                                    <th data-toggle="true">Official Receipt Date</th>
+                                                    <th data-hide="phone">Payer Name</th>
+                                                    <th data-hide="phone">Cash Amount</th>
+                                                    <!-- <th data-hide="phone">Check Amount</th>
+                                                    <th data-hide="phone">Credit Card Amount</th>
+                                                    <th data-hide="phone">Other Amount</th> -->
+                                                    <th data-hide="phone">Applied Amount</th>
+                                                    <th data-hide="phone">Change</th>
+                                                    <!-- <th data-hide="phone">Refund Amount</th> -->
+                                                    <th data-hide="phone">Remarks</th>
+                                                    <th data-hide="phone">Cashier Name</th>
+                                                    <th>Action</th>
+                                                </tr>
                                             </thead>
+
                                             <?php
                                             /*
                                                 *get details of allpatients
                                                 *
                                             */
-                                                $ret="SELECT * FROM  his_emergency ORDER BY RAND() "; 
-                                                $stmt= $mysqli->prepare($ret) ;
-                                                $stmt->execute() ;//ok
-                                                $res=$stmt->get_result();
-                                                $cnt=1;
-                                                while($row=$res->fetch_object())
-                                                {
+                                            $ret = "SELECT * FROM  his_cash ";
+                                            //sql code to get to ten docs  randomly
+                                            $stmt = $mysqli->prepare($ret);
+                                            $stmt->execute(); //ok
+                                            $res = $stmt->get_result();
+                                            $cnt = 1;
+                                            while ($row = $res->fetch_object()) {
                                             ?>
-
                                                 <tbody>
-                                                <tr>
-                                                    <td><?php echo $cnt;?></td>
-                                                    <td><?php echo $row->n_Pname;?></td>
-                                                    <td><?php echo $row->n_attend;?></td>
-                                                    <td><?php echo $row->n_room;?></td>
-                                                    <td><?php echo $row->n_bed;?></td>
-                                                    <td><?php echo $row->n_source;?></td>
-                                                    <td><?php echo $row->n_admission;?></td>
-                                                    <td><?php echo $row->n_transaction;?></td>
-                                                    <td><?php echo $row->n_hospitalization;?></td>
-                                                    <td><?php echo $row->n_admit_case;?></td>
-                                                    <td><?php echo $row->n_department;?></td>
-                                                    <td><?php echo $row->n_billed;?></td>
-                                                    <td><?php echo $row->n_billed;?></td>
-                                                    <!--<td>
-                                                        <a href="his_admin_view_single_eqp.php?eqp_code=<?php echo $row->eqp_code;?>" class="badge badge-success"><i class="far fa-eye "></i> View</a>
-                                                    </td>-->
-                                                </tr>
+
+                                                    <td><?php echo $cnt; ?></td>
+                                                    <td><?php echo $row->cash_or_number; ?></td>
+                                                    <td><?php echo $row->cash_date; ?></td>
+                                                    <td><?php echo $row->cash_payer; ?></td>
+                                                    <td><?php echo $row->cash_amount; ?></td>
+                                                    <!-- <td><?php echo $row->cash_check; ?></td>
+                                                    <td><?php echo $row->cash_credit; ?></td> -->
+                                                    <td><?php echo $row->cash_applied; ?></td>
+                                                    <td><?php echo $row->discountAmount; ?></td>
+                                                    <td><?php echo $row->cash_remark; ?></td>
+                                                    <td><?php echo $row->cash_cashier; ?></td>
+
+                                                    <td>
+                                                        <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#deleteConfirmationModal" data-recordid="<?php echo $row->cash_id; ?>">
+                                                            <i class="mdi mdi-trash-can-outline"></i> Delete
+                                                        </a>
+                                                    </td>
+
+
                                                 </tbody>
-                                            <?php  $cnt = $cnt +1 ; }?>
-                                           <!-- <tfoot>
-                                            <tr class="active">
-                                                <td colspan="8">
-                                                    <div class="text-right">
+
+                                            <?php $cnt = $cnt + 1;
+                                            } ?>
+                                            <tfoot>
+                                                <tr class="active">
+                                                    <td colspan="10">
+
                                                         <ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tfoot> -->
+
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div> <!-- end .table-responsive-->
-                                </div> <!-- end card-box -->
-                            </div> <!-- end col -->
-                        </div>
-                        <!-- end row -->
 
-                    </div> <!-- container -->
+                                    <input type="hidden" name="deleteRecordId" id="deleteRecordId" value="">
 
-                </div> <!-- content -->
+                                </form>
+                            </div> <!-- end card-box -->
+                        </div> <!-- end col -->
+                    </div>
+                    <!-- end row -->
 
-                <!-- Footer Start -->
-                 <?php include('assets/inc/footer.php');?>
-                <!-- end Footer -->
+                </div> <!-- container -->
 
-            </div>
+            </div> <!-- content -->
 
-            <!-- ============================================================== -->
-            <!-- End Page content -->
-            <!-- ============================================================== -->
-
+            <!-- Footer Start -->
+            <?php include('assets/inc/footer.php'); ?>
+            <!-- end Footer -->
 
         </div>
-        <!-- END wrapper -->
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
 
 
-        <!-- Right bar overlay-->
-        <div class="rightbar-overlay"></div>
+    </div>
+    <!-- END wrapper -->
 
-        <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
 
-        <!-- Footable js -->
-        <script src="assets/libs/footable/footable.all.min.js"></script>
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
 
-        <!-- Init js -->
-        <script src="assets/js/pages/foo-tables.init.js"></script>
+    <!-- Vendor js -->
+    <script src="assets/js/vendor.min.js"></script>
 
-        <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
-        
-    </body>
+    <!-- Footable js -->
+    <script src="assets/libs/footable/footable.all.min.js"></script>
+
+    <!-- Init js -->
+    <script src="assets/js/pages/foo-tables.init.js"></script>
+
+    <!-- App js -->
+    <script src="assets/js/app.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.badge-danger').click(function() {
+                var recordId = $(this).data('recordid');
+                console.log("Record ID:", recordId); // Check if the correct ID is printed
+                $('#deleteRecordId').val(recordId);
+            });
+        });
+    </script>
+    <script>
+        // JavaScript function to filter the table based on the input
+        function searchTable() {
+            var input = document.getElementById("searchInput").value.toUpperCase();
+            var table = document.getElementById("ancillaryData");
+            var rows = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var patientNameCell = rows[i].getElementsByTagName("td")[1];
+                if (patientNameCell) {
+                    var patientName = patientNameCell.textContent || patientNameCell.innerText;
+                    if (patientName.toUpperCase().indexOf(input) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+
+
+</body>
 
 </html>

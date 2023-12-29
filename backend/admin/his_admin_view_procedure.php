@@ -51,7 +51,7 @@ $aid = $_SESSION['ad_id'];
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="his_admin_dashboard.php">Dashboard</a></li>
                                             <li class="breadcrumb-item"><a href="his_admin_equipments_inventory_copy.php">Procedure</a></li>
-
+                                            <li class="breadcrumb-item"><a href="#">View Procedure</a></li>
                                         </ol>
                                     </div>
 
@@ -69,28 +69,24 @@ $aid = $_SESSION['ad_id'];
                                             <div class="tab-content pt-0">
 
                                                 <div class="tab-pane active show" id="product-1-item">
-                                                    <img src="assets/images/hosp_asset.jpg" alt="" class="img-fluid mx-auto d-block rounded">
+                                                    <img src="../admin/assets/images/b.webp" alt="" class="img-fluid mx-auto d-block rounded">
                                                 </div>
 
                                             </div>
                                         </div> <!-- end col -->
                                         <div class="col-xl-7">
                                             <div class="pl-xl-3 mt-3 mt-xl-0">
-                                                <h2 class="mb-3">Description : <?php echo $row->pro_code; ?></h2>
+                                                <h2 class="mb-3">Description : <?php echo $row->pro_desc; ?></h2>
                                                 <hr>
-                                                <h4 class="text-danger">Code: <?php echo $row->pro_desc; ?></h4>
+                                                <h4 class="text-secondary">Code: <?php echo $row->pro_code; ?></h4>
                                                 <hr>
-                                                <h4 class="text-danger">Category: <?php echo $row->pro_category; ?></h4>
+                                                <h4 class="text-secondary">Category: <?php echo $row->pro_category; ?></h4>
                                                 <hr>
-                                                <h4 class="text-danger">Abbreviation : <?php echo $row->pro_abb; ?></h4>
+                                                <h4 class="text-secondary">Abbreviation : <?php echo $row->pro_abb; ?></h4>
                                                 <hr>
-                                                <h4 class="text-danger">Unit: <?php echo $row->pro_unit; ?></h4>
+                                                <h4 class="text-secondary">Barcode ID: <?php echo $row->pro_bar; ?></h4>
                                                 <hr>
-                                                <h4 class="text-danger">Big Unit : <?php echo $row->pro_big; ?></h4>
-                                                <hr>
-                                                <h4 class="text-danger">Conversion: <?php echo $row->pro_conv; ?></h4>
-                                                <hr>
-                                                <h4 class="text-danger">Barcode ID: <?php echo $row->pro_bar; ?></h4>
+                                                <h4 class="text-secondary">Price: ₱<?php echo $row->pro_price; ?>.00</h4>
 
                                                 <!--
                                                     <form class="form-inline mb-4">

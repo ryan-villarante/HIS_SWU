@@ -8,7 +8,7 @@ if (isset($_POST['update_profile'])) {
     $sup_email = $_POST['sup_email'];
     // $doc_pwd=sha1(md5($_POST['doc_pwd']));
     $sup_dpic = $_FILES["sup_dpic"]["name"];
-    move_uploaded_file($_FILES["sup_dpic"]["tmp_name"], "assets/images/users/" . $_FILES["sup_dpic"]["name"]);
+    move_uploaded_file($_FILES["sup_dpic"]["tmp_name"], "../admin/assets/images/users/" . $_FILES["sup_dpic"]["name"]);
 
     //sql to insert captured values
     $query = "UPDATE his_supadmin SET sup_fname=?, sup_lname=?,  sup_email=?, sup_dpic=? WHERE sup_id = ?";
@@ -70,7 +70,7 @@ if (isset($_POST['update_pwd'])) {
         <!-- ============================================================== -->
         <?php
         $aid = $_SESSION['sup_id'];
-        $ret = "select * from his_supadmin where sup_id=?";
+        $ret = "SELECT * from his_supadmin where sup_id=?";
         $stmt = $mysqli->prepare($ret);
         $stmt->bind_param('i', $aid);
         $stmt->execute(); //ok
@@ -103,7 +103,7 @@ if (isset($_POST['update_pwd'])) {
                         <div class="row">
                             <div class="col-lg-4 col-xl-4">
                                 <div class="card-box text-center">
-                                    <img src="assets/images/users/<?php echo $row->sup_dpic; ?>" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+                                    <img src="../admin/assets/images/users/<?php echo $row->sup_dpic; ?>" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
 
                                     <h4 class="mb-0"><?php echo $row->sup_fname; ?> <?php echo $row->sup_lname; ?></h4>
                                     <p class="text-muted">@System_Super_Administrator_HIS</p>
@@ -140,13 +140,13 @@ if (isset($_POST['update_pwd'])) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="firstname">First Name</label>
-                                                            <input type="text" name="ad_fname" class="form-control" id="firstname" placeholder="<?php echo $row->ad_fname; ?>">
+                                                            <input type="text" name="sup_fname" class="form-control" id="firstname" value="<?php echo $row->sup_fname; ?>">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="lastname">Last Name</label>
-                                                            <input type="text" name="ad_lname" class="form-control" id="lastname" placeholder="<?php echo $row->ad_lname; ?>">
+                                                            <input type="text" name="sup_lname" class="form-control" id="lastname" value="<?php echo $row->sup_lname; ?>">
                                                         </div>
                                                     </div> <!-- end col -->
                                                 </div> <!-- end row -->
@@ -154,13 +154,13 @@ if (isset($_POST['update_pwd'])) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="useremail">Email Address</label>
-                                                            <input type="email" name="ad_email" class="form-control" id="useremail" placeholder="<?php echo $row->ad_email; ?>">
+                                                            <input type="email" name="sup_email" class="form-control" id="useremail" value="<?php echo $row->sup_email; ?>">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="useremail">Profile Picture</label>
-                                                            <input type="file" name="ad_dpic" class="form-control btn btn-success" id="useremail" placeholder="<?php echo $row->ad_email; ?>">
+                                                            <input type="file" name="sup_dpic" class="form-control btn btn-secondary" id="useremail" value="<?php echo $row->sup_email; ?>">
                                                         </div>
                                                     </div>
 
@@ -260,7 +260,7 @@ if (isset($_POST['update_pwd'])) {
                                                     </div>  -->
 
                                                 <div class="text-right">
-                                                    <button type="submit" name="update_profile" class="btn btn-success waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i> Save</button>
+                                                    <button type="submit" name="update_profile" class="btn btn-secondary waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i> Save</button>
                                                 </div>
                                             </form>
 
@@ -294,7 +294,7 @@ if (isset($_POST['update_pwd'])) {
                                                 </div>
 
                                                 <div class="text-right">
-                                                    <button type="submit" name="update_pwd" class="btn btn-success waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i> Update Password</button>
+                                                    <button type="submit" name="update_pwd" class="btn btn-secondary waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i> Update Password</button>
                                                 </div>
                                             </form>
                                         </div>

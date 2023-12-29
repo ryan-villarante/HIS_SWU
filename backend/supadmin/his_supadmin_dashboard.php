@@ -3,7 +3,7 @@ session_start();
 include 'assets/inc/config.php';
 include 'assets/inc/checklogin.php';
 check_login();
-$aid = $_SESSION['ad_id'];
+$aid = $_SESSION['sup_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +39,7 @@ $aid = $_SESSION['ad_id'];
                         <div class="col-12">
                             <div class="page-title-box">
 
-                                <h4 class="page-title">Super Administrator Dashboard</h4>
+                                <h4 style="font-family: Nunito,sans-serif;" class="page-title">Super Administrator Dashboard</h4>
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@ $aid = $_SESSION['ad_id'];
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="avatar-lg rounded-circle bg-soft-dark border-secondary border">
-                                            <i class="		fas fa-user-shield  font-22 avatar-title text-secondary" style="color: #800;"></i>
+                                            <i class="		fas fa-user-shield  font-22 avatar-title text-secondary" style="color: #38414a;"></i>
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -135,6 +135,68 @@ $aid = $_SESSION['ad_id'];
                         </div> <!-- end col-->
                         <!--End InPatients-->
 
+                        <!-- START VIEW MODAL -->
+
+                        <div class="modal fade" id="viewAdmin" tabindex="-1" role="dialog" aria-labelledby="viewAdminLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="col-lg-8 col-xl-12">
+                                            <div class="card-box">
+                                                <ul class="nav nav-pills navtab-bg nav-justified">
+                                                    <li class="nav-item">
+                                                        <div class="form-group col-md-12 my-1">
+                                                            <input type="text" readonly name="" value="Admin Details" class="form-control" style="background-color: #38414a;color:white;text-align: center;">
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div class="text-left mt-3">
+
+                                                    <?php
+                                                    if (isset($_GET['user_id'])) {
+                                                        $user_id = $_GET['user_id'];
+                                                        $ret = "SELECT  * FROM his_user WHERE user_id=?";
+                                                        $stmt = $mysqli->prepare($ret);
+                                                        $stmt->bind_param('i', $user_id);
+                                                        $stmt->execute();
+                                                        $res = $stmt->get_result();
+
+                                                        if ($row = $res->fetch_object()) {
+                                                            // Rest of your code for displaying user details goes here
+                                                    ?>
+                                                            <div class="form-row">
+                                                                <div class="col-md-6">
+                                                                    <!-- Consultant details as in your code -->
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <!-- Image goes here -->
+                                                                </div>
+                                                            </div>
+                                                    <?php
+                                                        }
+                                                    } else {
+                                                        // Handle the case when 'user_id' is not set, for example, display an error message or redirect
+                                                        echo "User ID is not set.";
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- END VIEW MODAL -->
+
+
                         <!--Start Users-->
                         <div class=" col-xl-12">
                             <div class="widget-rounded-circle card-box">
@@ -142,17 +204,17 @@ $aid = $_SESSION['ad_id'];
 
                                     <div class="col-xl-12">
                                         <div class="card-box">
-                                            <h4 class="header-title mb-3">System Administrators</h4>
+                                            <h4 style="font-family: Nunito,sans-serif;" class="header-title mb-3">System Administrators</h4>
 
                                             <div class="table-responsive">
                                                 <table class="table table-borderless table-hover table-centered m-0">
 
                                                     <thead class="thead-light">
                                                         <tr>
-                                                            <th colspan="2">Picture</th>
+                                                            <th>Picture</th>
+                                                            <th>Admin ID</th>
                                                             <th>Name</th>
                                                             <th>Email</th>
-                                                            <th>Password</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -167,10 +229,11 @@ $aid = $_SESSION['ad_id'];
                                                     ?>
                                                         <tbody>
                                                             <tr>
-                                                                <td style="width: 36px;">
+                                                                <td>
                                                                     <img src="../admin/assets/images/users/<?php echo $row->ad_dpic; ?>" alt="img" title="contact-img" class="rounded-circle avatar-sm" />
                                                                 </td>
                                                                 <td>
+                                                                    <?php echo $row->ad_number; ?>
                                                                 </td>
                                                                 <td>
                                                                     <?php echo $row->ad_fname; ?> <?php echo $row->ad_lname; ?>
@@ -178,11 +241,11 @@ $aid = $_SESSION['ad_id'];
                                                                 <td>
                                                                     <?php echo $row->ad_email; ?>
                                                                 </td>
+
                                                                 <td>
-                                                                    <?php echo $row->ad_pwd; ?>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="his_supadmin_view_admin.php?ad_id=<?php echo $row->ad_id; ?>>" class="btn btn-xs btn-secondary"><i class="mdi mdi-eye"></i> View</a>
+                                                                    <a href="#" class="badge badge-secondary" data-toggle="modal" data-target="#viewAdmin" data-usernumber="<?php echo $row->ad_number; ?>" data-username="<?php echo $row->ad_fname . ' ' . $row->ad_lname; ?>" data-useremail="<?php echo $row->ad_email; ?>" data-userimage="<?php echo $row->ad_dpic; ?>">
+                                                                        <i class="mdi mdi-eye"></i> View
+                                                                    </a>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -212,13 +275,72 @@ $aid = $_SESSION['ad_id'];
 
                     </div>
 
+                    <!-- START VIEW MODAL -->
 
+                    <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-lg-8 col-xl-12">
+                                        <div class="card-box">
+                                            <ul class="nav nav-pills navtab-bg nav-justified">
+                                                <li class="nav-item">
+                                                    <div class="form-group col-md-12 my-1">
+                                                        <input type="text" readonly name="" value="User Details" class="form-control" style="background-color: #38414a;color:white;text-align: center;">
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="text-left mt-3">
+
+                                                <?php
+                                                if (isset($_GET['user_id'])) {
+                                                    $user_id = $_GET['user_id'];
+                                                    $ret = "SELECT  * FROM his_user WHERE user_id=?";
+                                                    $stmt = $mysqli->prepare($ret);
+                                                    $stmt->bind_param('i', $user_id);
+                                                    $stmt->execute();
+                                                    $res = $stmt->get_result();
+
+                                                    if ($row = $res->fetch_object()) {
+                                                        // Rest of your code for displaying user details goes here
+                                                ?>
+                                                        <div class="form-row">
+                                                            <div class="col-md-6">
+                                                                <!-- Consultant details as in your code -->
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <!-- Image goes here -->
+                                                            </div>
+                                                        </div>
+                                                <?php
+                                                    }
+                                                } else {
+                                                    // Handle the case when 'user_id' is not set, for example, display an error message or redirect
+                                                    echo "User ID is not set.";
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- END VIEW MODAL -->
 
                     <!--Recently Employed Employees-->
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="card-box">
-                                <h4 class="header-title mb-3">System Users</h4>
+                                <h4 style="font-family: Nunito,sans-serif;" class="header-title mb-3">System Users</h4>
 
                                 <div class="table-responsive">
                                     <table class="table table-borderless table-hover table-centered m-0">
@@ -245,7 +367,7 @@ $aid = $_SESSION['ad_id'];
                                             <tbody>
                                                 <tr>
                                                     <td style="width: 36px;">
-                                                        <img src="../doc/assets/images/users/<?php echo $row->user_dpic; ?>" alt="img" title="contact-img" class="rounded-circle avatar-sm" />
+                                                        <img src="../admin/assets/images/users/<?php echo $row->user_dpic; ?>" alt="img" title="contact-img" class="rounded-circle avatar-sm" />
                                                     </td>
                                                     <td>
                                                     </td>
@@ -259,10 +381,12 @@ $aid = $_SESSION['ad_id'];
                                                         <?php echo $row->user_email; ?>
                                                     </td>
                                                     <td>
-                                                        <?php echo $row->user_cat; ?>
+                                                        <?php echo $row->user_dept; ?>
                                                     </td>
                                                     <td>
-                                                        <a href="his_admin_view_users.php?user_id=<?php echo $row->user_id; ?>&&user_number=<?php echo $row->user_number; ?>" class="btn btn-xs btn-secondary"><i class="mdi mdi-eye"></i> View</a>
+                                                        <a href="#" class="badge badge-secondary" data-toggle="modal" data-target="#viewModal" data-userid="<?php echo $row->user_id; ?>" data-usernumber="<?php echo $row->user_number; ?>" data-username="<?php echo $row->user_fname . ' ' . $row->user_lname; ?>" data-useremail="<?php echo $row->user_email; ?>" data-usercat="<?php echo $row->user_dept; ?>" data-userimage="<?php echo $row->user_dpic; ?>">
+                                                            <i class="mdi mdi-eye"></i> View
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -293,124 +417,184 @@ $aid = $_SESSION['ad_id'];
     </div>
     <!-- END wrapper -->
 
-    <!-- Right Sidebar -->
-    <div class="right-bar">
-        <div class="rightbar-title">
-            <a href="javascript:void(0);" class="right-bar-toggle float-right">
-                <i class="dripicons-cross noti-icon"></i>
-            </a>
-            <h5 class="m-0 text-white">Settings</h5>
-        </div>
-        <div class="slimscroll-menu">
-            <!-- User box -->
-            <div class="user-box">
-                <div class="user-img">
-                    <img src="assets/images/users/user-1.jpg" alt="user-img" title="Mat Helme" class="rounded-circle img-fluid">
-                    <a href="javascript:void(0);" class="user-edit"><i class="mdi mdi-pencil"></i></a>
+
+
+
+
+
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+    <!-- Vendor js -->
+    <script src="assets/js/vendor.min.js"></script>
+
+    <!-- Plugins js-->
+    <script src="assets/libs/flatpickr/flatpickr.min.js"></script>
+    <script src="assets/libs/jquery-knob/jquery.knob.min.js"></script>
+    <script src="assets/libs/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="assets/libs/flot-charts/jquery.flot.js"></script>
+    <script src="assets/libs/flot-charts/jquery.flot.time.js"></script>
+    <script src="assets/libs/flot-charts/jquery.flot.tooltip.min.js"></script>
+    <script src="assets/libs/flot-charts/jquery.flot.selection.js"></script>
+    <script src="assets/libs/flot-charts/jquery.flot.crosshair.js"></script>
+
+    <!-- Dashboar 1 init js-->
+    <script src="assets/js/pages/dashboard-1.init.js"></script>
+
+    <!-- App js-->
+    <script src="assets/js/app.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Listen for the modal to be shown
+            $('#viewAdmin').on('show.bs.modal', function(event) {
+                var link = $(event.relatedTarget); // Link that triggered the modal
+                var userId = link.data('userid'); // Get data attributes from the link
+                var userName = link.data('username');
+                var userNumber = link.data('usernumber');
+                var userEmail = link.data('useremail');
+                var userImage = link.data('userimage'); // Retrieve the image source
+
+                // Modify the modal content
+                var modal = $(this);
+                modal.find('.modal-content').html(`
+                <div class="modal-header">
+                    
                 </div>
+                <div class="modal-body">
+                    <div class="col-lg-8 col-xl-12">
+                        <div class="card-box">
+                            <ul class="nav nav-pills navtab-bg nav-justified">
+                                <li class="nav-item">
+                                    <div class="form-group col-md-12 my-1">
+                                        <input type="text" readonly name="" value="Admin Details" class="form-control" style="background-color: #38414a;color:white;text-align: center;">
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="text-left mt-3">
+                            <div class="text-left mt-3">  
+                                <div class="form-row">
+                                    <div class="col-md-6">
 
-                <!-- <h5><a href="javascript: void(0);"></a> </h5>
-                <p class="text-muted mb-0"><small></small></p>
-            </div> -->
-
-                <!-- Settings -->
-                <hr class="mt-0" />
-                <h5 class="pl-3">Basic Settings</h5>
-                <hr class="mb-0" />
-
-                <div class="p-3">
-                    <div class="checkbox checkbox-primary mb-2">
-                        <input id="Rcheckbox1" type="checkbox" checked>
-                        <label for="Rcheckbox1">
-                            Notifications
-                        </label>
-                    </div>
-                    <div class="checkbox checkbox-primary mb-2">
-                        <input id="Rcheckbox2" type="checkbox" checked>
-                        <label for="Rcheckbox2">
-                            API Access
-                        </label>
-                    </div>
-                    <div class="checkbox checkbox-primary mb-2">
-                        <input id="Rcheckbox3" type="checkbox">
-                        <label for="Rcheckbox3">
-                            Auto Updates
-                        </label>
-                    </div>
-                    <div class="checkbox checkbox-primary mb-2">
-                        <input id="Rcheckbox4" type="checkbox" checked>
-                        <label for="Rcheckbox4">
-                            Online Status
-                        </label>
-                    </div>
-                    <div class="checkbox checkbox-primary mb-0">
-                        <input id="Rcheckbox5" type="checkbox" checked>
-                        <label for="Rcheckbox5">
-                            Auto Payout
-                        </label>
+                                    <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe hehe">User ID</span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe  " id="inputlg" value="${userNumber}">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe hehe">Name</span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe  " id="inputlg" value="${userName}">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe hehe">Email</span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe  " id="inputlg" value="${userEmail}">
+                                            </div>
+                                                  
+                
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+        <!-- Image goes here -->
+        <img style="border: 3px solid; border-color:#38414a; height:100%" src="../admin/assets/images/users/${userImage}" alt="Image Description" class="img-fluid">
+    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                       
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            `);
+            });
+        });
+    </script>
 
-                <!-- Timeline -->
-                <hr class="mt-0" />
-                <h5 class="px-3">Messages <span class="float-right badge badge-pill badge-danger">25</span></h5>
-                <hr class="mb-0" />
-                <div class="p-3">
-                    <div class="inbox-widget">
-                        <div class="inbox-item">
-                            <div class="inbox-item-img"><img src="assets/images/users/user-2.jpg" class="rounded-circle" alt=""></div>
-                            <p class="inbox-item-author"><a href="javascript: void(0);" class="text-dark">Tomaslau</a></p>
-                            <p class="inbox-item-text">I've finished it! See you so...</p>
+    <script>
+        $(document).ready(function() {
+            // Listen for the modal to be shown
+            $('#viewModal').on('show.bs.modal', function(event) {
+                var link = $(event.relatedTarget); // Link that triggered the modal
+                var userId = link.data('userid'); // Get data attributes from the link
+                var userNumber = link.data('usernumber');
+                var userName = link.data('username');
+                var userEmail = link.data('useremail');
+                var userCat = link.data('usercat');
+                var userImage = link.data('userimage'); // Retrieve the image source
+
+                // Modify the modal content
+                var modal = $(this);
+                modal.find('.modal-content').html(`
+                <div class="modal-header">
+                    
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-8 col-xl-12">
+                        <div class="card-box">
+                            <ul class="nav nav-pills navtab-bg nav-justified">
+                                <li class="nav-item">
+                                    <div class="form-group col-md-12 my-1">
+                                        <input type="text" readonly name="" value="User Details" class="form-control" style="background-color: #38414a;color:white;text-align: center;">
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="text-left mt-3">
+                            <div class="text-left mt-3">  
+                                <div class="form-row">
+                                    <div class="col-md-6">
+
+                                    <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe hehe">User ID</span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe  " id="inputlg" value="${userNumber}">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe hehe">Name</span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe  " id="inputlg" value="${userName}">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe hehe">Email</span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe  " id="inputlg" value="${userEmail}">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text hehe hehe">Department</span>
+                                                </div>
+                                                <input type="text" readonly name="" class="form-control hehe  " id="inputlg" value="${userCat}">
+                                            </div>        
+                
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+        <!-- Image goes here -->
+        <img style="border: 3px solid; border-color:#38414a; height:100%" src="../admin/assets/images/users/${userImage}" alt="Image Description" class="img-fluid">
+    </div>
+                                </div>
+                               
+                            </div>
                         </div>
-                        <div class="inbox-item">
-                            <div class="inbox-item-img"><img src="assets/images/users/user-3.jpg" class="rounded-circle" alt=""></div>
-                            <p class="inbox-item-author"><a href="javascript: void(0);" class="text-dark">Stillnotdavid</a></p>
-                            <p class="inbox-item-text">This theme is awesome!</p>
-                        </div>
-                        <div class="inbox-item">
-                            <div class="inbox-item-img"><img src="assets/images/users/user-4.jpg" class="rounded-circle" alt=""></div>
-                            <p class="inbox-item-author"><a href="javascript: void(0);" class="text-dark">Kurafire</a></p>
-                            <p class="inbox-item-text">Nice to meet you</p>
-                        </div>
-
-                        <div class="inbox-item">
-                            <div class="inbox-item-img"><img src="assets/images/users/user-5.jpg" class="rounded-circle" alt=""></div>
-                            <p class="inbox-item-author"><a href="javascript: void(0);" class="text-dark">Shahedk</a></p>
-                            <p class="inbox-item-text">Hey! there I'm available...</p>
-                        </div>
-                        <div class="inbox-item">
-                            <div class="inbox-item-img"><img src="assets/images/users/user-6.jpg" class="rounded-circle" alt=""></div>
-                            <p class="inbox-item-author"><a href="javascript: void(0);" class="text-dark">Adhamdannaway</a></p>
-                            <p class="inbox-item-text">This theme is awesome!</p>
-                        </div>
-                    </div> <!-- end inbox-widget -->
-                </div> <!-- end .p-3-->
-
-            </div> <!-- end slimscroll-menu-->
-        </div>
-        <!-- /Right-bar -->
-
-        <!-- Right bar overlay-->
-        <div class="rightbar-overlay"></div>
-
-        <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
-
-        <!-- Plugins js-->
-        <script src="assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="assets/libs/jquery-knob/jquery.knob.min.js"></script>
-        <script src="assets/libs/jquery-sparkline/jquery.sparkline.min.js"></script>
-        <script src="assets/libs/flot-charts/jquery.flot.js"></script>
-        <script src="assets/libs/flot-charts/jquery.flot.time.js"></script>
-        <script src="assets/libs/flot-charts/jquery.flot.tooltip.min.js"></script>
-        <script src="assets/libs/flot-charts/jquery.flot.selection.js"></script>
-        <script src="assets/libs/flot-charts/jquery.flot.crosshair.js"></script>
-
-        <!-- Dashboar 1 init js-->
-        <script src="assets/js/pages/dashboard-1.init.js"></script>
-
-        <!-- App js-->
-        <script src="assets/js/app.min.js"></script>
+                       
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            `);
+            });
+        });
+    </script>
 
 </body>
 
