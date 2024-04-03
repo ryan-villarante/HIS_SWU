@@ -1195,7 +1195,6 @@ if (isset($_POST['add_render'])) {
                     $("#selected-items-tbody").append(newRow);
                 });
             }
-
             // Event listener for incrementing quantity
             $(document).on("click", ".increment-quantity", function() {
                 var index = $(this).data("index");
