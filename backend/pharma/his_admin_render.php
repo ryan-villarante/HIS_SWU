@@ -13,7 +13,7 @@ if (isset($_POST['netAmount'])) {
 }
 
 check_login();
-$aid = $_SESSION['ad_id'];
+//$aid = $_SESSION['ad_id'];
 ?>
 
 
@@ -75,7 +75,7 @@ if (isset($_POST['add_render'])) {
     //declare a varible which will be passed to alert function
     if ($stmt) {
         $success = "Successfully Added";
-        header("Location: " . 'http://localhost/HIS-SWU/backend/admin/his_admin_swu_ancillary.php');
+        header("Location: " . 'his_admin_swu_ancillary.php');
     } else {
         $err = "Please Try Again Or Try Later";
     }
@@ -196,7 +196,7 @@ if (isset($_POST['add_render'])) {
                                 <div class="row">
 
                                     <div class="table-responsive">
-                                        <table id="transactionsLineItems" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                        <table id="" class="table table-bordered toggle-circle mb-0" data-page-size="7">
                                             <thead class="table-primary">
 
                                                 <tr>
@@ -387,6 +387,7 @@ if (isset($_POST['add_render'])) {
                                                         <th data-hide="phone">Item Code</th>
                                                         <th data-hide="phone">Item Category </th>
                                                         <th data-hide="phone">Item Description</th>
+                                                        <th data-hide="phone">Quantity</th>
                                                         <th data-hide="phone">Price</th>
                                                     </tr>
                                                 </thead>
@@ -434,7 +435,7 @@ if (isset($_POST['add_render'])) {
                                                                                 </a>
                                                                             </li>
 
-                                                                            <li class="nav-item">
+                                                                            <!-- <li class="nav-item">
                                                                                 <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link">
                                                                                     Examination
                                                                                 </a>
@@ -443,7 +444,7 @@ if (isset($_POST['add_render'])) {
                                                                                 <a href="#procedure" data-toggle="tab" aria-expanded="false" class="nav-link">
                                                                                     Procedure
                                                                                 </a>
-                                                                            </li>
+                                                                            </li> -->
                                                                         </ul>
                                                                         <script>
                                                                             $(document).ready(function() {
@@ -529,6 +530,26 @@ if (isset($_POST['add_render'])) {
                                                                                             </tfoot>
                                                                                         </table>
                                                                                         <!-- </div> -->
+                                                                                        <!-- Quantity Modal -->
+                                                                                            <div class="modal fade" id="quantityModal" tabindex="-1" role="dialog" aria-labelledby="quantityModalLabel" aria-hidden="true">
+                                                                                                <div class="modal-dialog" role="document">
+                                                                                                    <div class="modal-content">
+                                                                                                        <div class="modal-header">
+                                                                                                            <h5 class="modal-title" id="quantityModalLabel">Select Quantity</h5>
+                                                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                                                <span aria-hidden="true">&times;</span>
+                                                                                                            </button>
+                                                                                                        </div>
+                                                                                                        <div class="modal-body">
+                                                                                                            <input type="number" id="quantityInput" value="1" min="1">
+                                                                                                        </div>
+                                                                                                        <div class="modal-footer">
+                                                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                                                            <button type="button" class="btn btn-primary" id="addToCartBtn">Add to Cart</button>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
                                                                                     </div> <!-- end .table-responsive-->
 
 
@@ -582,12 +603,12 @@ if (isset($_POST['add_render'])) {
                                                                                         <tbody>
                                                                                             <?php while ($row = $res->fetch_object()) { ?>
                                                                                                 <tr>
-                                                                                                    <td> <a class="badge badge-success select-item-btn" data-type="examination" data-id="<?php echo $row->exam_code; ?>" data-desc="<?php echo $row->exam_desc; ?>" data-category="<?php echo $row->exam_abb; ?>" data-price="<?php echo $row->exam_price; ?>">
+                                                                                                    <td> <a class="badge badge-success select-item-btn" data-type="examination" data-id="<?php echo $row->exam_code; ?>" data-desc="<?php echo $row->exam_desc; ?>" data-category="<?php echo $row->exam_category; ?>" data-price="<?php echo $row->exam_price; ?>">
                                                                                                             <i class="far fa-eye "></i> Select
                                                                                                         </a>
                                                                                                     <td><?php echo $row->exam_code; ?></td>
                                                                                                     <td><?php echo $row->exam_category; ?></td>
-                                                                                                    <td><?php echo $row->exam_abb; ?></td>
+                                                                                                    <td><?php echo $row->exam_desc; ?></td>
                                                                                                     <td>₱<?php echo $row->exam_price; ?>.00</td>
 
 
@@ -696,37 +717,32 @@ if (isset($_POST['add_render'])) {
                                                                         <div class="table-responsive table table-sm">
                                                                             <table id="selected-items-table" class="table table-bordered toggle-circle mb-0" data-page-size="7">
                                                                                 <div class="form-group col-md-12 my-1">
-                                                                                    <input type="text" readonly name="" value="Selected Item(s)" class="form-control" style="background-color:#800;color:white;text-align: center;">
+                                                                                    <input type="text" readonly name="" value="Transaction Line Items" class="form-control" style="background-color:#800;color:white;text-align: center;">
+                                                                                    <thead class="table-danger">
+                                                                                        <tr>
+                                                                                            <th>#</th>
+                                                                                            <th data-hide="phone">Item Code</th>
+                                                                                            <th data-hide="phone">Item Category </th>
+                                                                                            <th data-hide="phone">Item Description</th>
+                                                                                            <th data-hide="phone">Quantity</th>
+                                                                                            <th data-hide="phone">Price</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody id="selected-items-tbody">
+
+                                                                                    </tbody>
+                                                                                    <tfoot>
+                                                                                        <tr class="active">
+                                                                                            <td colspan="10">
+                                                                                                <div class="text-right">
+                                                                                                    <ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tfoot>
                                                                                 </div>
-
-                                                                                <thead class="table-danger">
-                                                                                    <tr>
-
-                                                                                        <th data-toggle="true"></th>
-                                                                                        <th data-toggle="true">Item Code</th>
-                                                                                        <th data-hide="phone">Item Category</th>
-                                                                                        <th data-toggle="true">Item Description</th>
-                                                                                        <th data-hide="phone"> Price</th>
-
-
-                                                                                    </tr>
-                                                                                </thead>
-
-
-                                                                                <tbody>
-                                                                                            
-                                                                                </tbody>
-
-                                                                                <tfoot>
-                                                                                    <tr class="active">
-                                                                                        <td colspan="10">
-                                                                                            <div class="text-right">
-                                                                                                <ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tfoot>
                                                                             </table>
+
                                                                         </div>
 
 
@@ -1125,53 +1141,115 @@ if (isset($_POST['add_render'])) {
                 var itemPrice = $(this).data("price");
 
 
-                // Add selected item to the array
-                selectedItems.push({
-                    itemCode,
-                    itemCategory,
-                    itemDesc,
-                    itemPrice
-                });
-                // Create a new row for the selected item
-                var newRow = `<tr>
-                    <td>${selectedItems.length}</td>
-                    <td>${itemCode}</td>
-                    <td>${itemCategory}</td>
-                    <td>${itemDesc}</td>
-                    <td>₱ ${itemPrice}.00</td>
-                </tr>`;
+                // Check if the item is already in selectedItems
+                var existingItem = selectedItems.find(item => item.itemCode === itemCode);
 
-                if (type == "examination") {
-                    examinations.push(itemCategory)
+                if (existingItem) {
+                    // Item already selected, update quantity or add price
+                    existingItem.quantity = (existingItem.quantity || 1) + 1;
+                    existingItem.totalPrice = (existingItem.totalPrice || 0) + itemPrice;
+                } else {
+                    // Item not selected, add it to the array
+                    selectedItems.push({
+                        itemCode,
+                        itemCategory,
+                        itemDesc,
+                        itemPrice,
+                        quantity: 1, // Set initial quantity to 1
+                        totalPrice: itemPrice // Set initial total price
+                    });
+
+                    if (type === "examination") {
+                        examinations.push(itemCategory);
+                    }
                 }
 
-                // Append the new row to the selected items section in the modal
-                $("#selected-items-table").append(newRow);
+                // Update only the tbody with selected items
+                updateSelectedItemsTable();
             });
+
+            // Function to update only the tbody of the selected items table
+            function updateSelectedItemsTable() {
+                // Clear the existing content in tbody
+                $("#selected-items-tbody").empty();
+
+                // Loop through selected items and append rows to the tbody
+                selectedItems.forEach(function(item, index) {
+                    var newRow = `<tr>
+                        <td>${index + 1}</td>
+                        <td>${item.itemCode}</td>
+                        <td>${item.itemCategory}</td>
+                        <td>${item.itemDesc}</td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number" class="form-control" value="${item.quantity}" min="1" id="quantity-${index}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary decrement-quantity" type="button" data-index="${index}"><i class="fas fa-minus"></i></button>
+                                    <button class="btn btn-outline-secondary increment-quantity" type="button" data-index="${index}"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </td>
+                        <td>₱ ${item.totalPrice}.00</td>
+                    </tr>`;
+
+                    $("#selected-items-tbody").append(newRow);
+                });
+            }
+
+            // Event listener for incrementing quantity
+            $(document).on("click", ".increment-quantity", function() {
+                var index = $(this).data("index");
+                selectedItems[index].quantity++;
+                selectedItems[index].totalPrice = selectedItems[index].itemPrice * selectedItems[index].quantity;
+                updateSelectedItemsTable();
+            });
+
+            // Event listener for decrementing quantity
+            $(document).on("click", ".decrement-quantity", function() {
+                var index = $(this).data("index");
+                if (selectedItems[index].quantity > 1) {
+                    selectedItems[index].quantity--;
+                    selectedItems[index].totalPrice = selectedItems[index].itemPrice * selectedItems[index].quantity;
+                    updateSelectedItemsTable();
+                }
+            });
+
 
             // When the "Continue" button is clicked
             $("#continueButton").click(function() {
-                // Loop through selectedItems array and append rows to the main table
-                for (var i = 0; i < selectedItems.length; i++) {
-                    var tableRow = `<tr>
-                                <td>${(i + 1)}</td>
-                                <td>${selectedItems[i].itemCode}</td>
-                                <td>${selectedItems[i].itemCategory}</td>
-                                <td>${selectedItems[i].itemDesc}</td>
-                                <td>₱ ${selectedItems[i].itemPrice}.00</td>
-                            </tr>`;
+                    // Loop through selectedItems array and append rows to the main table
+                    for (var i = 0; i < selectedItems.length; i++) {
+                        var tableRow = `<tr>
+                                    <td>${(i + 1)}</td>
+                                    <td>${selectedItems[i].itemCode}</td>
+                                    <td>${selectedItems[i].itemCategory}</td>
+                                    <td>${selectedItems[i].itemDesc}</td>
+                                    <td>${selectedItems[i].quantity}</td>
+                                    <td>₱ ${selectedItems[i].totalPrice}.00</td>
+                                </tr>`;
+                        $("#transactionsLineItems tbody").append(tableRow);
+                    }
+                    
+                    allSelectedItems = [...allSelectedItems, ...selectedItems];
+                    selectedItems = [];
+                    $("#selected-items-table tbody").empty();
+                    console.log("allselecteditems: ", allSelectedItems)
+                    $("#transactionsLineItems").data("selectedItems", allSelectedItems);
+                    
+                    // Close the modal
+                    $("#myModal").modal("hide");
+                    
+                    // AJAX call to pass selected items data to a PHP file
+                    $.ajax({
+                        type: "POST",
+                        url: "his_admin_print_render.php", // Path to your PHP file
+                        data: { selectedItems: allSelectedItems }, // Pass selectedItems array
+                        success: function(response) {
+                            console.log("Selected items data sent to second_file.php");
+                        }
+                    });
+                });
 
-
-                    $("#transactionsLineItems tbody").append(tableRow);
-                }
-                allSelectedItems = [...allSelectedItems, ...selectedItems];
-                selectedItems = [];
-                $("#selected-items-table tbody").empty();
-                console.log("allselecteditems: ", allSelectedItems)
-                $("#transactionsLineItems").data("selectedItems", allSelectedItems);
-                // Close the modal
-                $("#myModal").modal("hide");
-            });
 
             $("#saveBtn").click(function() {
                 $("#render_exam").val(JSON.stringify({
@@ -1183,6 +1261,48 @@ if (isset($_POST['add_render'])) {
                 selectedItems = [];
                 $("#selected-items-table tbody").empty();
             })
+
+
+            $("#saveBtn").click(() => {
+                if (!$.trim($("#transactionsLineItems tbody").html())) {
+                    alert("No data selected!");
+                } else {
+                    $("#exampleModal").modal('show');
+
+                    const items = $("#transactionsLineItems").data("selectedItems");
+                    const roomPrice = parseFloat($("#roomPrice").val()) || 0;
+                    const professionalFee = parseFloat($("#proFee").val()) || 0;
+
+                    // Calculate the total price of selected items
+                    const totalItemPrice = items.reduce((total, item) => total + item.totalPrice, 0);
+
+                    // Calculate the net amount including roomPrice and professionalFee
+                    const netAmount = totalItemPrice + roomPrice + professionalFee;
+
+                    // Send the netAmount to the server via AJAX
+                    $.ajax({
+                        type: "POST",
+                        url: "his_admin_render.php", // The URL of your PHP file
+                        data: {
+                            netAmount: netAmount
+                        },
+                        success: function(response) {
+                            // Handle the response if needed
+                            console.log("Net Amount sent to the server.");
+                        }
+                    });
+
+                    // Update the client-side display (if needed)
+                    $("#totalPrice").val("₱ " + totalItemPrice.toFixed(2));
+                    $("#grossAmount").val("₱ " + totalItemPrice.toFixed(2));
+                    $("#netAmount").val("₱ " + netAmount.toFixed(2));
+
+                    // Calculate the total number of selected items and display in "Total Items" input
+                    const totalItems = items.length;
+                    $("#total").val(totalItems);
+                    $("#qty").val(totalItems + ".00");
+                }
+            });
         });
     </script>
 
@@ -1203,59 +1323,38 @@ if (isset($_POST['add_render'])) {
     </script>
 
 
-    <script>
-        document.getElementById("printButton").addEventListener("click", function(event) {
-            event.preventDefault(); // Prevent the default link behavior
+<script>
+    document.getElementById("printButton").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent the default link behavior
 
-            // Get the URL from the "href" attribute of the "Print" button
-            var url = this.getAttribute("href");
+        // Retrieve data from localStorage
+        var selectedItems = JSON.parse(localStorage.getItem("selectedItems"));
 
-            // Open the URL in a new window or tab
-            window.open(url, "_blank");
-        });
-    </script>
-    <script>
-        $("#saveBtn").click(() => {
-            if (!$.trim($("#transactionsLineItems tbody").html())) {
-                alert("No data selected!");
-            } else {
-                $("#exampleModal").modal('show');
+        // Check if there are selected items
+        if (selectedItems) {
+            // Send selected items to the server via AJAX
+            $.ajax({
+                type: "POST",
+                url: "his_admin_print_render.php", // The URL of your PHP file
+                data: {
+                    selectedItems: selectedItems
+                },
+                success: function(response) {
+                    // Handle the response if needed
+                    console.log("Selected items sent to the server.");
+                }
+            });
+        } else {
+            console.log("No selected items to send.");
+        }
 
-                const items = $("#transactionsLineItems").data("selectedItems");
-                const roomPrice = parseFloat($("#roomPrice").val()) || 0;
-                const professionalFee = parseFloat($("#proFee").val()) || 0;
+        // Get the URL from the "href" attribute of the "Print" button
+        var url = this.getAttribute("href");
 
-                // Calculate the total price of selected items
-                const itemsPrice = items.reduce((totalPrice, item) => totalPrice + item.itemPrice, 0);
-
-                // Calculate the net amount including roomPrice and professionalFee
-                const netAmount = itemsPrice + roomPrice + professionalFee;
-
-                // Send the netAmount to the server via AJAX
-                $.ajax({
-                    type: "POST",
-                    url: "his_admin_render.php", // The URL of your PHP file
-                    data: {
-                        netAmount: netAmount
-                    },
-                    success: function(response) {
-                        // Handle the response if needed
-                        console.log("Net Amount sent to the server.");
-                    }
-                });
-
-                // Update the client-side display (if needed)
-                $("#totalPrice").val("₱ " + itemsPrice.toFixed(2));
-                $("#grossAmount").val("₱ " + itemsPrice.toFixed(2));
-                $("#netAmount").val("₱ " + netAmount.toFixed(2));
-
-                // Calculate the total number of selected items and display in "Total Items" input
-                const totalItems = items.length;
-                $("#total").val(totalItems);
-                $("#qty").val(totalItems + ".00");
-            }
-        });
-    </script>
+        // Open the URL in a new window or tab
+        window.open(url, "_blank");
+    });
+</script>
 
 
 

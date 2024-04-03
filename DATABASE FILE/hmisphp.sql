@@ -470,8 +470,6 @@ CREATE TABLE `his_patient_transfers` (
 -- Dumping data for table `his_patient_transfers`
 --
 
-INSERT INTO `his_patient_transfers` (`t_id`, `t_hospital`, `t_date`, `t_pat_name`, `t_pat_number`, `t_status`) VALUES
-(1, 'Kenyatta National Hospital', '2020-01-11', 'Mart Developers', '9KXPM', 'Success');
 
 -- --------------------------------------------------------
 

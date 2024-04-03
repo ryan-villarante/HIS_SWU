@@ -262,7 +262,7 @@ if (isset($_GET['delete'])) {
                                                                                     <!-- Add Form for Drugs -->
                                                                                     <form method="post">
                                                                                         <form method="post">
-                                                                                            <div class="form-row required">
+                                                                                            <div class="form-row">
                                                                                                 <div class="form-group col-md-3" style="display: none;">
                                                                                                     <?php
 
@@ -347,7 +347,7 @@ if (isset($_GET['delete'])) {
                                                                                 <div class="tab-pane" id="med">
                                                                                     <!-- Add Form for Medicines -->
                                                                                     <form method="post">
-                                                                                        <div class="form-row required">
+                                                                                        <div class="form-row">
                                                                                             <div class="form-group col-md-3" style="display: none;">
                                                                                                 <?php
 
@@ -569,7 +569,7 @@ if (isset($_GET['delete'])) {
                                                             <div class="modal-body">
 
                                                                 <form method="post">
-                                                                    <div class="form-row required">
+                                                                    <div class="form-row">
                                                                         <div class="form-group col-md-4" style="display: none;">
                                                                             <?php
                                                                             $length = 10;
@@ -621,6 +621,9 @@ if (isset($_GET['delete'])) {
                                                                                 <option>Lipid Profile</option>
                                                                                 <option>Thyroid Test(s)</option>
                                                                                 <option>Prothrombin Time (PT) with INR & Activated Partial Thromboplastin Time (PTT)</option>
+                                                                                <option>Stool Test (ST)</option>
+                                                                                <option>Lipid Panel Cholesterol Test (LPCT)</option>
+                                                                                <option>Serum Glutamic-Pyruvic Transaminase (SGPT)</option>
                                                                                 <option>Urinalysis (UA)</option>
                                                                                 <!-- Add more lab exams as needed -->
                                                                             </select>
@@ -794,7 +797,7 @@ if (isset($_GET['delete'])) {
                                                             </div>
                                                             <div class="modal-body">
                                                                 <form method="post">
-                                                                    <div class="form-row required">
+                                                                    <div class="form-row">
                                                                         <div class="form-group col-md-6" style="display: none;">
                                                                             <?php
                                                                             $length = 9;

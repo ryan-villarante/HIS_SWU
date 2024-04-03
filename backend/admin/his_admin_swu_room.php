@@ -241,6 +241,7 @@ if (isset($_POST['add_rooms'])) {
                                                                     <label class="col-form-label">Room Classification</label>
                                                                     <select required="required" name="room_classification" id="room_classification" class="form-control small-input">
                                                                         <option></option>
+                                                                        <option>EMERGENCY</option>
                                                                         <option>PRIVATE</option>
                                                                         <option>SEMI PRIVATE</option>
                                                                         <option>WARD</option>
@@ -509,7 +510,7 @@ if (isset($_POST['add_rooms'])) {
 
                 const type = $("#room_number").val();
                 const roomClassification = $("#room_classification").val();
-                const maxBeds = (roomClassification === "PRIVATE") ? 1 : (roomClassification === "SEMI PRIVATE") ? 3 : Infinity;
+                const maxBeds = (roomClassification === "PRIVATE") ? 1 : (roomClassification === "SEMI PRIVATE") ? 3 : (roomClassification === "EMERGENCY") ? 3 : Infinity;
 
 
                 if (!type) {
@@ -574,6 +575,8 @@ if (isset($_POST['add_rooms'])) {
 
                 if (roomClassification === "PRIVATE") {
                     maxBedsInput.val(1);
+                } else if (roomClassification === "EMERGENCY") {
+                    maxBedsInput.val(3);
                 } else if (roomClassification === "SEMI PRIVATE") {
                     maxBedsInput.val(3);
                 } else if (roomClassification === "WARD") {

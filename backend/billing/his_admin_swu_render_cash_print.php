@@ -118,7 +118,7 @@ $aid = $_SESSION['user_id'];
                     ?>
 
 
-                            <div class="row">
+        <div class="row">
                                 <div class="col-12">
                                     <div class="card-box">
                                         <!-- Logo & title -->
@@ -139,7 +139,7 @@ $aid = $_SESSION['user_id'];
 
                                         </div> -->
                                         <div class="clearfix">
-                                            <div class="float-right" style="text-align: right;">
+                                            <div class="float-middle" style="text-align: center;">
                                                 <!-- <h2 class="text-center">Sacred Heart Hospital</h4> -->
                                                 <!-- <img src="../admin/assets/images/bill.png" alt="bills"> -->
                                                 <img src="../admin/assets/images/bill1.png" alt="SWU" style="size: 10px; margin-right:40px; ">
@@ -150,7 +150,7 @@ $aid = $_SESSION['user_id'];
 
                                         </div>
 
-                                        <div class="form-group col-md-12 my-1">
+                                        <div class="form-group col-md-12 my-4">
                                             <table id="" class="table table-borderless table-hover mb-0" data-page-size="6">
 
                                                 <thead class="table-danger" style="background-color: #800; color:white">
@@ -177,7 +177,7 @@ $aid = $_SESSION['user_id'];
                                             </div>
 
                                             <div class="table-responsive ">
-                                                <table id="ancillaryData" class="table table-border table-hover mb-0" data-page-size="6">
+                                                <table id="ancillaryData" class="table table-bordered table-hover mb-0" data-page-size="6">
                                                     <thead style="background-color: #800; color:white">
                                                         <tr>
                                                             <th>#</th>

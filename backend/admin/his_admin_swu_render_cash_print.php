@@ -151,12 +151,13 @@ $aid = $_SESSION['ad_id'];
                                         </div>
 
                                         <div class="form-group col-md-12 my-4">
+                                        <input type="text" readonly name="" value="Patient Details" class="form-control lab" style="background-color: #800;color:white;text-align: center;border:none;font-weight: bold;">
                                             <table id="" class="table table-borderless table-hover mb-0" data-page-size="6">
 
                                                 <thead class="table-danger" style="background-color: #800; color:white">
                                                     <tr>
 
-                                                        <th data-toggle="true">Patient Details</th>
+                                                        <!-- <th data-toggle="true">Patient Details</th> -->
                                                     </tr>
                                                 </thead>
                                                 <table>
@@ -178,11 +179,11 @@ $aid = $_SESSION['ad_id'];
 
                                             <div class="table-responsive ">
                                                 <table id="ancillaryData" class="table table-bordered table-hover mb-0" data-page-size="6">
-                                                    <thead style="background-color: #800; color:white">
+                                                    <thead style="text-align: center;">
                                                         <tr>
                                                             <th>#</th>
-                                                            <th data-toggle="true">Description</th>
-                                                            <th data-hide="phone">Amount</th>
+                                                            <th>Description</th>
+                                                            <th>Amount</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody data-toggle="true" data-show="4">
@@ -201,21 +202,9 @@ $aid = $_SESSION['ad_id'];
                                                         <td><strong><?php echo $itemPrice ?></strong></td>
                                                     </tbody>
                                                     <tbody data-toggle="true" data-show="4">
-                                                        <td><strong></strong></td>
-                                                        <td style="text-align: right;"><strong>TOTAL:</strong></td>
+                                                        <td style="text-align: right;" colspan="2"><strong>TOTAL:</strong></td>
                                                         <td><strong><?php echo $payment ?></strong></td>
                                                     </tbody>
-
-
-                                                    <tfoot>
-                                                        <tr class="active">
-                                                            <td colspan="8">
-                                                                <div class="text-right">
-                                                                    <ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tfoot>
                                                 </table>
                                             </div> <!-- end .table-responsive-->
                                             <div class="col-sm-12 text-right">

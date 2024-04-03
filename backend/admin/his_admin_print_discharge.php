@@ -102,7 +102,7 @@ $id = $_GET['id'];
                                         <!-- Logo & title -->
                                         <div class="clearfix">
 
-                                            <div class="float-right" style="text-align: right;">
+                                            <div class="float-center" style="text-align: center;">
                                                 <img src="../admin/assets/images/bill1.png" alt="SWU" style="size: 8px; margin-right:40px; ">
                                                 <h4 class="text-center">Villa Aznar, Urgello Sambag II Cebu City </h4>
                                                 <h4 class="text-center">Tel. No.(32) 254-7984, 256-0502 to 256-0504</h4>
@@ -110,26 +110,80 @@ $id = $_GET['id'];
                                             </div>
 
                                         </div>
-                                        <input type="text" readonly name="" value="Discharge Slip" class="form-control" style="background-color: #6c757d;color:white;text-align: center;">
+                                        <input type="text" readonly name="" value="Discharge Slip" class="form-control" style="background-color: #800;color:white;text-align: center;">
 
                                         <div class="row discharge my-2">
-
-                                            <div class="mt-3 float-left" style="    margin-left: 2rem;">
-                                                <p class="m-b-10">Patient Name:<strong> &nbsp;<?php echo $row->dis_name ?></strong> <span class="float-right"></span></p>
-                                                <p class="m-b-10">Physician:<strong>&nbsp;<?php echo $row->dis_doc ?></strong> <span class="float-right"> </span></p>
-                                                <p class="m-b-10">Admission Date <strong>&nbsp;<?php echo $row->dis_time ?></strong> <span class="float-right"><span class="badge badge-success"></span></span></p>
-                                                <p class="m-b-10">Discharge Date:<strong>&nbsp; <?php echo date('Y-m-d') ?></strong><span class="float-right"></span></p>
-                                                <p class="m-b-10">Disposition :<strong> &nbsp; <?php echo $row->dis_diag ?></strong> <span class="float-right"></span></p>
-                                                <!-- <p class="m-b-10">Procedures/Therapies :<strong>&nbsp;<?php echo $row->dis_procedure ?></strong> <span class="float-right"> </span></p> -->
-                                                <p class="m-b-10">Admission Result :<strong>&nbsp;<?php echo $row->dis_complication ?></strong> <span class="float-right"><span class="badge badge-success"></span></span></p>
-                                                <p class="m-b-10">Initial Impression:<strong>&nbsp;<?php echo $row->dis_consultation ?> </strong> <span class="float-right"></span></p>
-                                                <p class="m-b-10">Patient Status:<strong>&nbsp; <?php echo $row->dis_lab ?></strong><span class="float-right"></span></p>
-                                                <p class="m-b-10">Discharge Diagnosis:<strong>&nbsp;<?php echo $row->dis_condition ?> </strong> <span class="float-right"></span></p>
-
-                                            </div>
+                                            <div class="table-responsive ">
+                                                    <table id="ancillaryData" class="table table-bordered table-hover mb-0" data-page-size="6" style="font-size:20px;">
+                                                        <thead style="text-align: center;">
+                                                            <tr>
+                                                                <th>Summary</th>
+                                                                <th>Details</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody data-toggle="true" data-show="4">
+                                                            <tr>
+                                                                <td><strong>Personal Identification</strong></td>
+                                                                <td>
+                                                                    <p class="m-b-10">Patient Name:<strong> &nbsp;<?php echo $row->dis_name ?></strong> <span class="float-right"></span></p>
+                                                                    <p class="m-b-10">Patient Status:<strong>&nbsp; <?php echo $row->dis_lab ?></strong><span class="float-right"></span></p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Date of Admission</strong></td>
+                                                                <td>
+                                                                    <p class="m-b-10"><strong>&nbsp;<?php echo $row->dis_time ?></strong> <span class="float-right"><span class="badge badge-success"></span></span></p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Date of Discharge</strong></td>
+                                                                <td>
+                                                                    <p class="m-b-10"><strong>&nbsp;<?php echo date('Y-m-d') ?></strong> <span class="float-right"><span class="badge badge-success"></span></span></p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Disposition</strong></td>
+                                                                <td>
+                                                                    <p class="m-b-10"><strong>&nbsp;<?php echo $row->dis_diag ?></strong> <span class="float-right"><span class="badge badge-success"></span></span></p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Admission Result </strong></td>
+                                                                <td>
+                                                                    <p class="m-b-10"><strong>&nbsp;<?php echo $row->dis_complication ?></strong> <span class="float-right"><span class="badge badge-success"></span></span></p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Initial Impression </strong></td>
+                                                                <td>
+                                                                    <p class="m-b-10"><strong>&nbsp;<?php echo $row->dis_consultation ?></strong> <span class="float-right"><span class="badge badge-success"></span></span></p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Patient Status </strong></td>
+                                                                <td>
+                                                                    <p class="m-b-10"><strong>&nbsp;<?php echo $row->dis_lab ?></strong> <span class="float-right"><span class="badge badge-success"></span></span></p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Discharge Diagnosis </strong></td>
+                                                                <td>
+                                                                    <p class="m-b-10"><strong>&nbsp;<?php echo $row->dis_condition ?></strong> <span class="float-right"><span class="badge badge-success"></span></span></p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    
+                                                </div> <!-- end .table-responsive-->
+                                                
                                         </div><!-- end col -->
+                                        <div class="form-group margin col-md-3 mt-5" style="font-size:20px;">
+                                                        <p><strong><u><?php echo $row->dis_doc ?> </u></strong> <span class="float-right"></span></p>
+                                                        <p>&nbsp;&nbsp;&nbsp;Physician<span class="float-right"></span></p>
+                                                    </div>
                                         <div class="mt-4 mb-1">
                                             <div class="text-right d-print-none">
+                                                
                                                 <!-- <a href="his_admin_inpatient_records.php" class="btn btn-danger waves-effect waves-light"><i class="	fa fa-backward mr-1"></i> Go Back</a> -->
                                                 <a href="javascript:window.print()" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-printer mr-1"></i> Print</a>
                                             </div>

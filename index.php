@@ -170,7 +170,7 @@ if (isset($_POST['user_login'])) {
     <title>Hospital Information System -A Super Responsive Information System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="" name="description" />
-    <meta content="" name="MartDevelopers" />
+    <meta content="" name="NilvelCasptone" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="backend/infostaff/assets/images/favicon.ico">

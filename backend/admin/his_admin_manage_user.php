@@ -107,6 +107,9 @@ if (isset($_POST['add_user'])) {
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         Fill all fields
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
                                     <div class="modal-body ">
                                         <div class="card-body">
@@ -172,9 +175,8 @@ if (isset($_POST['add_user'])) {
                                                     </div>
 
                                                     <div class="modal-footer ">
-                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                                                         <button type="submit" name="add_user" class="ladda-button btn btn-success my-3" data-style="expand-right">Add User</button>
-
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                                                     </div>
                                             </form>
 

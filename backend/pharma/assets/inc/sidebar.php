@@ -118,6 +118,13 @@
                                 <span style="font-size: large;">Items / Services</span>
                             </a>
                         </li>
+                        <li>
+                        <a href="his_admin_swu_ancillary.php">
+                            <i class="	fas fa-pills"></i>
+                            <span style="font-size: large;">Ancillary Services</span>
+                        </a>
+
+                    </li>
 
 
 

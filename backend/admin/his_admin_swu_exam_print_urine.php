@@ -87,7 +87,7 @@ $id = $_GET['id'];
 
                     if (true) {
 
-                        $ret = "SELECT * FROM his_cbc WHERE up_id=?";
+                        $ret = "SELECT * FROM his_urinalysis WHERE up_id=?";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->bind_param('i', $id);
                         $stmt->execute();
@@ -132,7 +132,7 @@ $id = $_GET['id'];
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="card-box">
-                                                            <h5 class="text-center" style="font-size: 18px;">Complete Blood Count Differential</h5>
+                                                            <h5 class="text-center" style="font-size: 18px;">Routine Urinalysis</h5>
 
                                                             <div class="table-responsive">
                                                                 <table class="table" style="text-align:center;">
@@ -146,83 +146,89 @@ $id = $_GET['id'];
                                                                     <tbody>
                                                                         <!-- Other test rows -->
                                                                         <tr>
-                                                                            <td>WBC</td>
-                                                                            <td><?php echo $row->wbc ?></td>
-                                                                            <td style="color: <?php echo ($row->wbc_range === 'Low') ? 'green' : (($row->wbc_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->wbc_range ?></td>
-                                                                            <td>5.000 - 17.0000^3/mm^3</td>
+                                                                            <td>Color</td>
+                                                                            <td colspan="2"><?php echo $row->color ?></td>
+                                                                            <td></td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td>SEG</td>
-                                                                            <td><?php echo $row->seg ?></td>
-                                                                            <td style="color: <?php echo ($row->seg_range === 'Low') ? 'green' : (($row->seg_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->seg_range ?></td>
-                                                                            <td>37.0000 - 80.0000 %</td>
+                                                                            <td>Transparency</td>
+                                                                            <td colspan="2"><?php echo $row->transparent ?></td>
+                                                                            <td></td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td>LYM</td>
-                                                                            <td><?php echo $row->lym ?></td>
-                                                                            <td style="color: <?php echo ($row->lym_range === 'Low') ? 'green' : (($row->lym_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->lym_range ?></td>
-                                                                            <td>10.000 - 50.0000 %</td>
+                                                                            <td>Sp. Gravity</td>
+                                                                            <td><?php echo $row->sp_gravity ?></td>
+                                                                            <td style="color: <?php echo ($row->sp_range === 'Low') ? 'green' : (($row->sp_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->sp_range ?></td>
+                                                                            <td>1.003 - 1.035</td>
                                                                         </tr>
                                                                         <!-- Add the new test row here -->
                                                                         <tr>
-                                                                            <td>MON</td>
-                                                                            <td><?php echo $row->mon ?></td>
-                                                                            <td style="color: <?php echo ($row->mon_range === 'Low') ? 'green' : (($row->mon_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->mon_range ?></td>
-                                                                            <td>0.0000 - 12.0000 %</td>
+                                                                            <td>Protein</td>
+                                                                            <td colspan="2"><?php echo $row->protein ?></td>
+                                                                            <td></td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td>EOS</td>
-                                                                            <td><?php echo $row->eos ?></td>
-                                                                            <td style="color: <?php echo ($row->eos_range === 'Low') ? 'green' : (($row->eos_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->eos_range ?></td>
-                                                                            <td>0.0000 - 7.0000 %</td>
+                                                                            <td>Glucose</td>
+                                                                            <td colspan="2"><?php echo $row->glocuse ?></td>
+                                                                            <td></td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td>BAS</td>
-                                                                            <td><?php echo $row->bas ?></td>
-                                                                            <td style="color: <?php echo ($row->bas_range === 'Low') ? 'green' : (($row->bas_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->bas_range ?></td>
-                                                                            <td> 0.0000 - 2.5000 %</td>
+                                                                            <td>Bilirubin</td>
+                                                                            <td colspan="2"><?php echo $row->bilirubin ?></td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Blood</td>
+                                                                            <td colspan="2"><?php echo $row->blood ?></td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Leucocytes</td>
+                                                                            <td colspan="2"><?php echo $row->leucocytes ?></td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Nitrite</td>
+                                                                            <td colspan="2"><?php echo $row->nitrite ?></td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Urobilinogen</td>
+                                                                            <td><?php echo $row->urobilinogen ?></td>
+                                                                            <td style="color: <?php echo ($row->urobilinogen_range === 'Low') ? 'green' : (($row->urobilinogen_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->urobilinogen_range ?></td>
+                                                                            <td><1.0</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Ketone</td>
+                                                                            <td colspan="2"><?php echo $row->ketone ?></td>
+                                                                            <td></td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>RBC</td>
                                                                             <td><?php echo $row->rbc ?></td>
                                                                             <td style="color: <?php echo ($row->rbc_range === 'Low') ? 'green' : (($row->rbc_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->rbc_range ?></td>
-                                                                            <td>4.0000 - 5.4000 10/mm^3</td>
+                                                                            <td>0 - 5</td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td>HGB</td>
-                                                                            <td><?php echo $row->hgb ?></td>
-                                                                            <td style="color: <?php echo ($row->hgb_range === 'Low') ? 'green' : (($row->hgb_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->hgb_range ?></td>
-                                                                            <td>12.0000 - 15.0000 g/dl</td>
+                                                                            <td>WBC</td>
+                                                                            <td><?php echo $row->wbc ?></td>
+                                                                            <td style="color: <?php echo ($row->wbc_range === 'Low') ? 'green' : (($row->wbc_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->wbc_range ?></td>
+                                                                            <td>0 - 5</td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td>HCT</td>
-                                                                            <td><?php echo $row->hct ?></td>
-                                                                            <td style="color: <?php echo ($row->hct_range === 'Low') ? 'green' : (($row->hct_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->hct_range ?></td>
-                                                                            <td>41.9000 - 51.1000 %</td>
+                                                                            <td>Epithelial Cells</td>
+                                                                            <td colspan="2"><?php echo $row->epithelial_cells ?></td>
+                                                                            <td></td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td>MCV</td>
-                                                                            <td><?php echo $row->mcv ?></td>
-                                                                            <td style="color: <?php echo ($row->mcv_range === 'Low') ? 'green' : (($row->mcv_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->mcv_range ?></td>
-                                                                            <td>83.0000 - 100.0000 µm^3</td>
+                                                                            <td>Bacteria</td>
+                                                                            <td colspan="2"><?php echo $row->bacteria ?></td>
+                                                                            <td></td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td>MCH</td>
-                                                                            <td><?php echo $row->mch ?></td>
-                                                                            <td style="color: <?php echo ($row->mch_range === 'Low') ? 'green' : (($row->mch_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->mch_range ?></td>
-                                                                            <td>30.9000 - 35.1000 pg</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>MCHC</td>
-                                                                            <td><?php echo $row->mchc ?></td>
-                                                                            <td style="color: <?php echo ($row->mchc_range === 'Low') ? 'green' : (($row->mchc_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->mchc_range ?></td>
-                                                                            <td>32.0000 - 36.0000 g/dl</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>PLT</td>
-                                                                            <td><?php echo $row->plt ?></td>
-                                                                            <td style="color: <?php echo ($row->plt_range === 'Low') ? 'green' : (($row->plt_range === 'High') ? 'red' : 'red'); ?>"><?php echo $row->plt_range ?></td>
-                                                                            <td>150.0000 - 450.0000 10^3/mm^3</td>
+                                                                            <td>Mucus Threads</td>
+                                                                            <td colspan="2"><?php echo $row->mucus_threads ?></td>
+                                                                            <td></td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Remarks</td>
